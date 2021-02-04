@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Burger menu öffnen</string>
+    <string name="navigation_drawer_close">Burger menu Schließen</string>
 
     <string name="nav_header_app">StoRe</string>
     <string name="nav_header_server">Server Adresse</string>
