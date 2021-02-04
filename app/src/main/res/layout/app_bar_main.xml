@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/main"
+            app:menu="@menu/menu_main_activity"
             app:navigationIcon="@drawable/ic_menu"
             app:title="@string/app_name"
             app:layout_constraintTop_toBottomOf="@+id/label"
