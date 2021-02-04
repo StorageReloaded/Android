@@ -1,13 +1,25 @@
 <resources>
     <string name="app_name">StoRe</string>
+
+    <!-- Main Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="nav_header_app">StoRe</string>
+    <string name="nav_header_server">Server Address</string>
+    <string name="nav_header_title">Selected Database</string>
+    <string name="nav_header_subtitle">128 Entries</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="nav_database">Database</string>
+    <string name="nav_database_new">New Database</string>
+    <string name="nav_database_settings">Database Settings</string>
+    <string name="nav_database_select">Select Database</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_account_manage">Manage Account</string>
+    <string name="nav_account_logout">Log out</string>
+    <string name="nav_app">App</string>
+    <string name="nav_app_settings">App Settings</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
