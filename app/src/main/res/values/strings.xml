@@ -24,4 +24,6 @@
     <string name="action_search">Search</string>
     <string name="action_scanner">Code Scanner</string>
     <string name="action_tags">Tags</string>
+
+    <string name="fab_add_item">Add Item</string>
 </resources>
