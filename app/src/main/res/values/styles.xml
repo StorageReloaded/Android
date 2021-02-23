@@ -5,5 +5,20 @@
     <style name="Widget.MyTheme.NavigationView" parent="Widget.MaterialComponents.NavigationView">
         <item name="itemTextAppearance">?attr/textAppearanceBody2</item>
     </style>
+    
+    <style name="Theme.StoRe.Preference" parent="PreferenceThemeOverlay">
+        <item name="preferenceCategoryTitleTextAppearance">@style/Theme.StoRe.Preference.PreferenceCategoryTitleTextAppearance</item>
+        <item name="preferenceCategoryStyle">@style/Theme.StoRe.Preference.PreferenceCategoryStyle</item>
+        <item name="android:textColor">@color/material_on_background_emphasis_high_type</item>
+        <!-- TODO: Style the summary/subtitle -->
+    </style>
+
+    <style name="Theme.StoRe.Preference.PreferenceCategoryTitleTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/material_on_background_emphasis_high_type</item>
+    </style>
+
+    <style name="Theme.StoRe.Preference.PreferenceCategoryStyle" parent="Preference.Category.Material">
+        <item name="android:textColor">@color/material_on_background_emphasis_high_type</item>
+    </style>
 
 </resources>

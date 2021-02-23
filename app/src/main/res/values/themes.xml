@@ -24,6 +24,7 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
         <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="preferenceTheme">@style/Theme.StoRe.Preference</item>
 
         <!-- System styles -->
         <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorPrimary</item>

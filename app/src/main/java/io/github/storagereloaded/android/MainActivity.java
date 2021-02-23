@@ -1,5 +1,6 @@
 package io.github.storagereloaded.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NotNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_app_settings:
+                startActivity(new Intent(this, AppSettingsActivity.class));
+        }
+
         drawer.close();
         return true;
     }

@@ -24,4 +24,6 @@
     <string name="action_tags">Tags</string>
 
     <string name="fab_add_item">Element hinzufügen</string>
+
+    <string name="title_activity_app_settings">App Einstellungen</string>
 </resources>

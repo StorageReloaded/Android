@@ -26,4 +26,6 @@
     <string name="action_tags">Tags</string>
 
     <string name="fab_add_item">Add Item</string>
+
+    <string name="title_activity_app_settings">App Settings</string>
 </resources>
