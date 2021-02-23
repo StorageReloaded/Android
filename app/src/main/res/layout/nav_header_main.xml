@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nav_header_app"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:textColor="@color/material_on_primary_emphasis_high_type" />
 
             <TextView
                 android:id="@+id/nav_header_server"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nav_header_server"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="@color/material_on_primary_emphasis_medium" />
         </LinearLayout>
 
     </LinearLayout>
@@ -55,13 +55,13 @@
         android:layout_height="wrap_content"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textColor="@color/material_on_primary_emphasis_high_type" />
 
     <TextView
         android:id="@+id/nav_header_database_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_subtitle"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        android:textColor="@color/material_on_primary_emphasis_medium" />
 </LinearLayout>
