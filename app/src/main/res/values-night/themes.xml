@@ -17,7 +17,7 @@
         <item name="colorOnSurface">@color/color_on_surface_dark</item>
         <item name="colorOnError">@color/color_on_error_dark</item>
 
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
         <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
     </style>
