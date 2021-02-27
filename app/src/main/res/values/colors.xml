@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary_light">#47c8b9</color>
-    <color name="color_secondary_light">#2d3e50</color>
-    <color name="color_background_light">#fafafa</color>
-    <color name="color_surface_light">#ffffff</color>
-    <color name="color_error_light">#e15454</color>
+    <!-- main colors -->
+    <color name="theme_primary">#47c8b9</color>
+    <color name="theme_on_primary">#2d3e50</color>
+    <color name="theme_secondary">#2d3e50</color>
+    <color name="theme_on_secondary">#fafafa</color>
+    <color name="theme_error">#e15454</color>
+    <color name="theme_on_error">#fafafa</color>
 
-    <color name="color_on_primary_light">#2d3e50</color>
-    <color name="color_on_secondary_light">#fafafa</color>
-    <color name="color_on_background_light">#2d3e50</color>
-    <color name="color_on_surface_light">#2d3e50</color>
-    <color name="color_on_error_light">#fafafa</color>
+    <!-- background colors -->
+    <color name="theme_background_light">#fafafa</color>
+    <color name="theme_on_background_light">#2d3e50</color>
+    <color name="theme_background_dark">#101a27</color>
+    <color name="theme_on_background_dark">#fafafa</color>
 
-    <color name="color_primary_dark">#47c8b9</color>
-    <color name="color_secondary_dark">#2d3e50</color>
-    <color name="color_background_dark">#101a27</color>
-    <color name="color_surface_dark">#2d3e50</color>
-    <color name="color_error_dark">#e15454</color>
-
-    <color name="color_on_primary_dark">#2d3e50</color>
-    <color name="color_on_secondary_dark">#fafafa</color>
-    <color name="color_on_background_dark">#fafafa</color>
-    <color name="color_on_surface_dark">#fafafa</color>
-    <color name="color_on_error_dark">#fafafa</color>
+    <color name="theme_surface_light">#ffffff</color>
+    <color name="theme_on_surface_light">#2d3e50</color>
+    <color name="theme_surface_dark">#2d3e50</color>
+    <color name="theme_on_surface_dark">#fafafa</color>
 </resources>

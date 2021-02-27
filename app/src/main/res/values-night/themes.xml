@@ -2,23 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.StoRe" parent="Base.Theme.StoRe">
         <!--Material color attributes (dark theme) -->
-        <item name="colorPrimary">@color/color_primary_dark</item>
-        <item name="colorPrimaryVariant">@color/color_primary_dark</item>
-        <item name="colorSecondary">@color/color_secondary_dark</item>
-        <item name="colorSecondaryVariant">@color/color_secondary_dark</item>
+        <item name="android:colorBackground">@color/theme_background_dark</item>
+        <item name="colorOnBackground">@color/theme_on_background_dark</item>
 
-        <item name="android:colorBackground">@color/color_background_dark</item>
-        <item name="colorSurface">@color/color_surface_dark</item>
-        <item name="colorError">@color/color_error_dark</item>
+        <item name="colorSurface">@color/theme_surface_dark</item>
+        <item name="colorOnSurface">@color/theme_on_surface_dark</item>
 
-        <item name="colorOnPrimary">@color/color_on_primary_dark</item>
-        <item name="colorOnSecondary">@color/color_on_secondary_dark</item>
-        <item name="colorOnBackground">@color/color_on_background_dark</item>
-        <item name="colorOnSurface">@color/color_on_surface_dark</item>
-        <item name="colorOnError">@color/color_on_error_dark</item>
-
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <!-- System styles -->
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
     </style>
 </resources>

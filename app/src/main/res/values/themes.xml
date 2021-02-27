@@ -5,20 +5,22 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.StoRe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!--Material color attributes (light theme) -->
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryVariant">@color/color_primary_light</item>
-        <item name="colorSecondary">@color/color_secondary_light</item>
-        <item name="colorSecondaryVariant">@color/color_secondary_light</item>
+        <item name="colorPrimary">@color/theme_primary</item>
+        <item name="colorPrimaryVariant">@color/theme_primary</item>
+        <item name="colorOnPrimary">@color/theme_on_primary</item>
 
-        <item name="android:colorBackground">@color/color_background_light</item>
-        <item name="colorSurface">@color/color_surface_light</item>
-        <item name="colorError">@color/color_error_light</item>
+        <item name="colorSecondary">@color/theme_secondary</item>
+        <item name="colorSecondaryVariant">@color/theme_secondary</item>
+        <item name="colorOnSecondary">@color/theme_on_secondary</item>
 
-        <item name="colorOnPrimary">@color/color_on_primary_light</item>
-        <item name="colorOnSecondary">@color/color_on_secondary_light</item>
-        <item name="colorOnBackground">@color/color_on_background_light</item>
-        <item name="colorOnSurface">@color/color_on_surface_light</item>
-        <item name="colorOnError">@color/color_on_error_light</item>
+        <item name="colorError">@color/theme_error</item>
+        <item name="colorOnError">@color/theme_on_error</item>
+
+        <item name="android:colorBackground">@color/theme_background_light</item>
+        <item name="colorOnBackground">@color/theme_on_background_light</item>
+
+        <item name="colorSurface">@color/theme_surface_light</item>
+        <item name="colorOnSurface">@color/theme_on_surface_light</item>
 
         <!--Component styles-->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
