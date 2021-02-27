@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">StoRe</string>
 
+    <string name="no_database_text">There is no database to show here. You can create a new one here or in the nav menu on the left.</string>
+    <string name="no_database_button">Create Database</string>
+
     <!-- Main Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

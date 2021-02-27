@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="no_database_text">Es gibt bisher noch keine Datenbank. Erstelle eine hier, oder links im Navigations Menu.</string>
+    <string name="no_database_button">Datenbank erstellen</string>
+
     <string name="navigation_drawer_open">Burger menu öffnen</string>
     <string name="navigation_drawer_close">Burger menu Schließen</string>
 
