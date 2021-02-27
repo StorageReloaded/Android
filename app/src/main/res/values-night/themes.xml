@@ -2,6 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.StoRe" parent="Base.Theme.StoRe">
         <!--Material color attributes (dark theme) -->
+        <item name="colorSecondary">@color/theme_primary</item>
+        <item name="colorSecondaryVariant">@color/theme_primary</item>
+        <item name="colorOnSecondary">@color/theme_on_primary</item>
+
         <item name="android:colorBackground">@color/theme_background_dark</item>
         <item name="colorOnBackground">@color/theme_on_background_dark</item>
 
