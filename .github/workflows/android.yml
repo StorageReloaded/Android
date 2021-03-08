@@ -16,7 +16,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Apply secrets
-      run: cat "$SECRETS_GPG_PASS" | gpg --quiet --batch --yes --decrypt --passphrase-fd 0 .github/secrets_overlay.tar.xz.gpg | tar xJ -C .
+      run: |
+        chmod +x .github/decrypt_secrets.sh
+        .github/decrypt_secrets.sh
       env:
         SECRETS_GPG_PASS: ${{ secrets.SECRETS_GPG_PASS }}
     - name: Build with Gradle
