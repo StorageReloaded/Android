@@ -15,8 +15,16 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Apply secrets
+      run: cat "$SECRETS_GPG_PASS" | gpg --quiet --batch --yes --decrypt --passphrase-fd 0 .github/secrets_overlay.tar.xz.gpg | tar xJ -C .
+      env:
+        SECRETS_GPG_PASS: ${{ secrets.SECRETS_GPG_PASS }}
     - name: Build with Gradle
       run: gradle assembleDebug --stacktrace
+      env:
+        KEYSTORE_STORE_PASS: ${{ secrets.KEYSTORE_STORE_PASS }}
+        KEYSTORE_KEY_ALIAS:  ${{ secrets.KEYSTORE_KEY_ALIAS }}
+        KEYSTORE_KEY_PASS:   ${{ secrets.KEYSTORE_KEY_PASS }}
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
