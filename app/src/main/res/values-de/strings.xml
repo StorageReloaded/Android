@@ -29,4 +29,15 @@
     <string name="fab_add_item">Element hinzufügen</string>
 
     <string name="title_activity_app_settings">App Einstellungen</string>
+
+    <!-- Login Activity -->
+    <string name="login">Login</string>
+    <string name="server_address">Server Adresse</string>
+    <string name="username">Benutzername</string>
+    <string name="password">Passwort</string>
+
+    <string name="server_check">Suche deinen Server...</string>
+    <string name="credential_check">Einloggen...</string>
+    <string name="server_error">Der Server wurde nicht erreicht</string>
+    <string name="wrong_credentials">Benutzername und Passwort stimmen nicht überein</string>
 </resources>

@@ -2,6 +2,10 @@
 
     <style name="Theme.StoRe" parent="Base.Theme.StoRe"/>
 
+    <style name="Theme.Store.Login" parent="Theme.StoRe">
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/theme_background_light</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="Base.Theme.StoRe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!--Material color attributes (light theme) -->

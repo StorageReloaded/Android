@@ -31,4 +31,15 @@
     <string name="fab_add_item">Add Item</string>
 
     <string name="title_activity_app_settings">App Settings</string>
+
+    <!-- Login Activity -->
+    <string name="login">Login</string>
+    <string name="server_address">Server Address</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="server_check">Calling your Server...</string>
+    <string name="credential_check">Logging in...</string>
+    <string name="server_error">Your server wasn\'t found</string>
+    <string name="wrong_credentials">Username or Password was wrong</string>
 </resources>

@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()){
             case R.id.nav_app_settings:
                 startActivity(new Intent(this, AppSettingsActivity.class));
+                break;
+            case R.id.nav_logout:
+                // For testing
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
         }
 
         drawer.close();

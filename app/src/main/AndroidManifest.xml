@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
         <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.Store.Login" />
+        <activity
             android:name=".AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
         <activity
