@@ -11,6 +11,7 @@
         android:theme="@style/Theme.StoRe">
         <activity
             android:name=".LoginActivity"
+            android:label="@string/login"
             android:theme="@style/Theme.Store.Login" />
         <activity
             android:name=".AppSettingsActivity"
