@@ -12,8 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.jetbrains.annotations.NotNull;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NotNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
             case R.id.nav_app_settings:
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
-        drawer.close();
+        drawer.closeDrawers();
         return true;
     }
 }
