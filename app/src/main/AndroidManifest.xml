@@ -11,10 +11,10 @@
         android:theme="@style/Theme.StoRe">
         <activity
             android:name=".DatabaseListActivity"
-            android:label="@string/select_database" />
+            android:label="@string/title_activity_database_list" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/login"
+            android:label="@string/title_activity_login"
             android:theme="@style/Theme.Store.Login" />
         <activity
             android:name=".AppSettingsActivity"

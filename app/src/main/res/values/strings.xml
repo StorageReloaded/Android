@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">StoRe</string>
 
+    <!-- Main Activity -->
     <string name="no_database_text">There is no database to show here. You can create a new one here or in the nav menu on the left.</string>
     <string name="no_database_button">Create Database</string>
+    <string name="fab_add_item">Add Item</string>
 
     <!-- Main Navigation Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -24,16 +26,16 @@
     <string name="nav_app">App</string>
     <string name="nav_app_settings">App Settings</string>
 
+    <!-- Main Action Menu -->
     <string name="action_search">Search</string>
     <string name="action_scanner">Code Scanner</string>
     <string name="action_tags">Tags</string>
 
-    <string name="fab_add_item">Add Item</string>
-
+    <!-- App Settings Activity -->
     <string name="title_activity_app_settings">App Settings</string>
 
     <!-- Login Activity -->
-    <string name="login">Login</string>
+    <string name="title_activity_login">Login</string>
     <string name="server_address">Server Address</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -44,6 +46,6 @@
     <string name="wrong_credentials">Username or Password was wrong</string>
 
     <!-- Database List Activity -->
-    <string name="select_database">Select Database</string>
+    <string name="title_activity_database_list">Select Database</string>
     <string name="database_settings">Database Settings</string>
 </resources>

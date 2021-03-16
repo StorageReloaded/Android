@@ -31,7 +31,7 @@
     <string name="title_activity_app_settings">App Einstellungen</string>
 
     <!-- Login Activity -->
-    <string name="login">Login</string>
+    <string name="title_activity_login">Login</string>
     <string name="server_address">Server Adresse</string>
     <string name="username">Benutzername</string>
     <string name="password">Passwort</string>
@@ -42,6 +42,6 @@
     <string name="wrong_credentials">Benutzername und Passwort stimmen nicht überein</string>
 
     <!-- DatabaseListActivity -->
-    <string name="select_database">Datenbank auswählen</string>
+    <string name="title_activity_database_list">Datenbank auswählen</string>
     <string name="database_settings">Datenbank Einstellungen</string>
 </resources>
