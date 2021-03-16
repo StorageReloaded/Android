@@ -48,4 +48,13 @@
     <!-- Database List Activity -->
     <string name="title_activity_database_list">Select Database</string>
     <string name="database_settings">Database Settings</string>
+
+    <!-- Database Settings Activity -->
+    <string name="title_activity_database_settings">Database Settings</string>
+    <string name="database_name">Database Name</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+
+    <string name="unsaved_dialog_title">Do you really want to leave?</string>
+    <string name="unsaved_dialog_description">Some unsaved changes will be lost.</string>
 </resources>

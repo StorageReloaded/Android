@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
         <activity
+            android:name=".DatabaseSettingsActivity"
+            android:label="@string/title_activity_database_settings" />
+        <activity
             android:name=".DatabaseListActivity"
             android:label="@string/title_activity_database_list" />
         <activity

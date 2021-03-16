@@ -44,4 +44,13 @@
     <!-- DatabaseListActivity -->
     <string name="title_activity_database_list">Datenbank auswählen</string>
     <string name="database_settings">Datenbank Einstellungen</string>
+
+    <!-- Database Settings Activity -->
+    <string name="title_activity_database_settings">Datenbank Einstellungen</string>
+    <string name="database_name">Datenbank Name</string>
+    <string name="save">Speichern</string>
+    <string name="delete">Löschen</string>
+
+    <string name="unsaved_dialog_title">Wirklich verlassen?</string>
+    <string name="unsaved_dialog_description">Nicht gespeicherte Änderungen gehen verloren.</string>
 </resources>

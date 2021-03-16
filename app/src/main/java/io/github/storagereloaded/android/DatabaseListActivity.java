@@ -41,7 +41,7 @@ public class DatabaseListActivity extends AppCompatActivity {
 
             @Override
             public void onItemSettingsClick(int index, Object item) {
-                // TODO: start DatabaseSettingsActivity
+                startActivity(new Intent(getApplicationContext(), DatabaseSettingsActivity.class));
             }
         }));
 
