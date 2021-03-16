@@ -40,4 +40,8 @@
     <string name="credential_check">Einloggen...</string>
     <string name="server_error">Der Server wurde nicht erreicht</string>
     <string name="wrong_credentials">Benutzername und Passwort stimmen nicht überein</string>
+
+    <!-- DatabaseListActivity -->
+    <string name="select_database">Datenbank auswählen</string>
+    <string name="database_settings">Datenbank Einstellungen</string>
 </resources>

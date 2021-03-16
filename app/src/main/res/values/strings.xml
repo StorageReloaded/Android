@@ -42,4 +42,8 @@
     <string name="credential_check">Logging in...</string>
     <string name="server_error">Your server wasn\'t found</string>
     <string name="wrong_credentials">Username or Password was wrong</string>
+
+    <!-- Database List Activity -->
+    <string name="select_database">Select Database</string>
+    <string name="database_settings">Database Settings</string>
 </resources>

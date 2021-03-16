@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
         <activity
+            android:name=".DatabaseListActivity"
+            android:label="@string/select_database" />
+        <activity
             android:name=".LoginActivity"
             android:label="@string/login"
             android:theme="@style/Theme.Store.Login" />
