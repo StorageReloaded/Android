@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/action_scanner"
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"
