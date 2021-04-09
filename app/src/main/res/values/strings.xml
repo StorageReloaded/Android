@@ -57,4 +57,11 @@
 
     <string name="unsaved_dialog_title">Do you really want to leave?</string>
     <string name="unsaved_dialog_description">Some unsaved changes will be lost.</string>
+
+    <!-- Item View Activity -->
+    <string name="edit">Edit</string>
+    <string name="amount">Amount</string>
+    <string name="location">Location</string>
+    <string name="created">Created</string>
+    <string name="last_edited">Last edited</string>
 </resources>

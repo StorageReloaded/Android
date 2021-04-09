@@ -53,4 +53,11 @@
 
     <string name="unsaved_dialog_title">Wirklich verlassen?</string>
     <string name="unsaved_dialog_description">Nicht gespeicherte Änderungen gehen verloren.</string>
+
+    <!-- Item View Activity -->
+    <string name="edit">Bearbeiten</string>
+    <string name="amount">Menge</string>
+    <string name="location">Ort</string>
+    <string name="created">Erstellt</string>
+    <string name="last_edited">Zuletzt bearbeitet</string>
 </resources>
