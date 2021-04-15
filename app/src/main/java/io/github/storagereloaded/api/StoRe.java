@@ -14,7 +14,7 @@ public class StoRe {
 	}
 
 	public List<Database> getDatabases() {
-		return Arrays.asList((Database) new DatabaseDummyImpl());
+		return Arrays.asList(new DatabaseDummyImpl());
 	}
 
 	public boolean sync(List<Database> databases) {
