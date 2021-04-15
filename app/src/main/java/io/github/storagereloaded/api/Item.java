@@ -22,6 +22,10 @@ public interface Item {
 
 	public void setImage(String image);
 
+	public Location getLocation();
+
+	public void setLocation(Location location);
+
 	public List<Tag> getTags();
 
 	public void setTags(List<Tag> tags);

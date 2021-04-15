@@ -8,6 +8,7 @@ import java.util.Map;
 
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Property;
+import io.github.storagereloaded.api.Location;
 import io.github.storagereloaded.api.Tag;
 
 public class ItemDummyImpl implements Item {
@@ -16,6 +17,7 @@ public class ItemDummyImpl implements Item {
 	private String name = "TestItem";
 	private String description = "TestItem please ignore";
 	private String image = "http://IP/PATH/img.png";
+	private Location location = new LocationDummyImpl();
 	private List<Tag> tags = new ArrayList<Tag>();
 	private int amount = 25;
 
@@ -70,6 +72,14 @@ public class ItemDummyImpl implements Item {
 	@Override
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	@Override

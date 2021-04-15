@@ -1,7 +1,5 @@
 package io.github.storagereloaded.api;
 
-import java.util.List;
-
 public interface Location {
 
 	public int getId();
@@ -11,8 +9,4 @@ public interface Location {
 	public String getName();
 
 	public void setName(String name);
-
-	public List<Item> getItems();
-
-	public void setItems(List<Item> items);
 }
