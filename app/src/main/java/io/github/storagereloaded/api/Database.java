@@ -12,7 +12,7 @@ public interface Database {
 
 	public void setName(String name);
 
-	public List<Location> getLocations();
+	public List<Item> getItems();
 
-	public void setLocations(List<Location> locations);
+	public void setItems(List<Item> items);
 }

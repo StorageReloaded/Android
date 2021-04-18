@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.storagereloaded.api.Database;
-import io.github.storagereloaded.api.Location;
+import io.github.storagereloaded.api.Item;
 
 public class DatabaseDummyImpl implements Database {
 
 	private int id = 43;
 	private String name = "Shelter";
-	private List<Location> locations = new ArrayList<Location>();
+	private List<Item> items = new ArrayList<>();
 
 	public DatabaseDummyImpl() {
-		locations.add(new LocationDummyImpl());
+		items.add(new ItemDummyImpl());
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class DatabaseDummyImpl implements Database {
 	}
 
 	@Override
-	public List<Location> getLocations() {
-		return locations;
+	public List<Item> getItems() {
+		return items;
 	}
 
 	@Override
-	public void setLocations(List<Location> locations) {
-		this.locations = locations;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 }
