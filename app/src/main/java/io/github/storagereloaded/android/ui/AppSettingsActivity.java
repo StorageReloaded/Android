@@ -1,4 +1,4 @@
-package io.github.storagereloaded.android;
+package io.github.storagereloaded.android.ui;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import io.github.storagereloaded.android.R;
 
 public class AppSettingsActivity extends AppCompatActivity {
 

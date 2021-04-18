@@ -9,22 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
-        <activity android:name=".ItemViewActivity" />
+        <activity android:name=".ui.ItemViewActivity" />
         <activity
-            android:name=".DatabaseSettingsActivity"
+            android:name=".ui.DatabaseSettingsActivity"
             android:label="@string/title_activity_database_settings" />
         <activity
-            android:name=".DatabaseListActivity"
+            android:name=".ui.DatabaseListActivity"
             android:label="@string/title_activity_database_list" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.Store.Login" />
         <activity
-            android:name=".AppSettingsActivity"
+            android:name=".ui.AppSettingsActivity"
             android:label="@string/title_activity_app_settings" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.StoRe">
             <intent-filter>

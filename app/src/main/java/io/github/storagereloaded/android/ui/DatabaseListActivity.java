@@ -1,4 +1,4 @@
-package io.github.storagereloaded.android;
+package io.github.storagereloaded.android.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import io.github.storagereloaded.android.R;
 
 public class DatabaseListActivity extends AppCompatActivity {
 

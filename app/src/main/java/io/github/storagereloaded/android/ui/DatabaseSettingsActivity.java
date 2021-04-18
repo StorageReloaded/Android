@@ -1,4 +1,4 @@
-package io.github.storagereloaded.android;
+package io.github.storagereloaded.android.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+
+import io.github.storagereloaded.android.R;
 
 public class DatabaseSettingsActivity extends AppCompatActivity {
 

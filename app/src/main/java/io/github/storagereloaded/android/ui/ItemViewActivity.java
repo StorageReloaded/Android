@@ -1,4 +1,4 @@
-package io.github.storagereloaded.android;
+package io.github.storagereloaded.android.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.text.DateFormat;
 
+import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.api.DisplayType;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Property;

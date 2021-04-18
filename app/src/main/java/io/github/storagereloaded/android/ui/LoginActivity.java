@@ -1,4 +1,4 @@
-package io.github.storagereloaded.android;
+package io.github.storagereloaded.android.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Random;
+
+import io.github.storagereloaded.android.R;
 
 public class LoginActivity extends AppCompatActivity {
 
