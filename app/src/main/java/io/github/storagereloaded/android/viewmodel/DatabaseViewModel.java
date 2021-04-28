@@ -18,7 +18,7 @@ public class DatabaseViewModel extends AndroidViewModel {
     private final DataRepository repository;
     private int databaseId;
 
-    public DatabaseViewModel(@NonNull Application application, DataRepository repository) {
+    public DatabaseViewModel(@NonNull Application application) {
         super(application);
         this.repository = ((StoReApp) application).getRepository();
     }
