@@ -15,6 +15,9 @@ public interface DatabaseDao {
     @Query("SELECT * FROM databases")
     LiveData<List<DatabaseEntity>> getDatabases();
 
+    @Query("SELECT * FROM databases WHERE id=:databaseId")
+    LiveData<DatabaseEntity> getDatabase(int databaseId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<DatabaseEntity> database);
 }

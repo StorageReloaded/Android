@@ -15,10 +15,10 @@ public class StoReApp extends Application {
     }
 
     public DataRepository getRepository() {
-        return DataRepository.getInstance();
+        return DataRepository.getInstance(getAppDatabase());
     }
 
-    public AppDatabase getDatabase() {
+    public AppDatabase getAppDatabase() {
         return AppDatabase.getInstance(this, appExecutors);
     }
 }

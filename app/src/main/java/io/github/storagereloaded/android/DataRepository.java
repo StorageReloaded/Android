@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import io.github.storagereloaded.android.db.AppDatabase;
+import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.api.Database;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Location;
@@ -12,25 +14,27 @@ import io.github.storagereloaded.api.Tag;
 
 public class DataRepository {
 
-    private static DataRepository sInstance;
+    private static DataRepository instance;
 
-    private DataRepository() {
+    private AppDatabase appDatabase;
 
+    private DataRepository(AppDatabase appDatabase) {
+        this.appDatabase = appDatabase;
     }
 
-    public static DataRepository getInstance() {
-        if (sInstance == null) {
+    public static DataRepository getInstance(AppDatabase appDatabase) {
+        if (instance == null) {
             synchronized (DataRepository.class) {
-                if (sInstance == null) {
-                    sInstance = new DataRepository();
+                if (instance == null) {
+                    instance = new DataRepository(appDatabase);
                 }
             }
         }
-        return sInstance;
+        return instance;
     }
 
-    public LiveData<List<Database>> getDatabases() {
-        return null; // TODO
+    public LiveData<List<DatabaseEntity>> getDatabases() {
+        return appDatabase.databaseDao().getDatabases();
     }
 
     public LiveData<List<Item>> getItems() {
@@ -57,8 +61,8 @@ public class DataRepository {
         return null; // TODO
     }
 
-    public LiveData<Database> getDatabase(int databaseId) {
-        return null; // TODO
+    public LiveData<DatabaseEntity> getDatabase(int databaseId) {
+        return appDatabase.databaseDao().getDatabase(databaseId);
     }
 
     public LiveData<Item> getItem(int itemId) {

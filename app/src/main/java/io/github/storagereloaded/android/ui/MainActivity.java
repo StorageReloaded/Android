@@ -2,6 +2,7 @@ package io.github.storagereloaded.android.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,18 +22,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.github.storagereloaded.android.R;
+import io.github.storagereloaded.android.viewmodel.DatabaseListViewModel;
 import io.github.storagereloaded.android.viewmodel.DatabaseViewModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    Toolbar toolbar;
     DrawerLayout drawer;
+    int databaseId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -47,9 +51,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == DatabaseListActivity.REQUEST_CODE) {
+            databaseId = data.getIntExtra(DatabaseListActivity.EXTRA_DATABASE_ID, -1);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         DatabaseViewModel model = new ViewModelProvider(this).get(DatabaseViewModel.class);
-        model.setDatabaseId(0);
+
+        // If onActivityResult delivered a databaseId
+        if(this.databaseId != -1) {
+            model.setDatabaseId(this.databaseId);
+            model.getDatabase().observe(this, databaseEntity -> {
+                Log.d("MainActivity", String.valueOf(databaseEntity));
+
+                if(databaseEntity != null) {
+                    toolbar.setTitle(databaseEntity.getName());
+                }
+            });
+            return;
+        }
+
+        // Get the first available database if none was selected
+        model.getDatabases().observe(this, databases -> {
+            if(databases != null){
+                int databaseId = databases.get(0).getId();
+                model.setDatabaseId(databaseId);
+                model.getDatabase().observe(this, databaseEntity -> {
+                    Log.d("MainActivity", String.valueOf(databaseEntity));
+
+                    if(databaseEntity != null) {
+                        toolbar.setTitle(databaseEntity.getName());
+                    }
+                });
+            }
+        });
     }
 
     @Override
