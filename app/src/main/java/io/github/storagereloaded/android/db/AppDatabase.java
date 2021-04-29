@@ -16,9 +16,11 @@ import java.util.List;
 
 import io.github.storagereloaded.android.AppExecutors;
 import io.github.storagereloaded.android.db.dao.DatabaseDao;
+import io.github.storagereloaded.android.db.dao.ItemDao;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
+import io.github.storagereloaded.android.db.entity.ItemEntity;
 
-@Database(entities = {DatabaseEntity.class}, version = 1)
+@Database(entities = {DatabaseEntity.class, ItemEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -27,6 +29,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "store";
 
     public abstract DatabaseDao databaseDao();
+
+    public abstract ItemDao itemDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
@@ -53,10 +57,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
                     // For testing
                     List<DatabaseEntity> databases = DataGenerator.generateDatabases();
+                    List<ItemEntity> items = DataGenerator.generateItems(databases);
 
                     // Insert data
                     database.runInTransaction(() -> {
                         database.databaseDao().insertAll(databases);
+                        database.itemDao().insertAll(items);
                     });
 
                     // notify that the database was created and it's ready to be used

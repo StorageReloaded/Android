@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.github.storagereloaded.android.db.AppDatabase;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
+import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.api.Database;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Location;
@@ -49,8 +50,8 @@ public class DataRepository {
         return null; // TODO
     }
 
-    public LiveData<List<Item>> getItemsInDatabase(int databaseId) {
-        return null; // TODO
+    public LiveData<List<ItemEntity>> getItemsInDatabase(int databaseId) {
+        return appDatabase.itemDao().getItemsInDatabase(databaseId);
     }
 
     public LiveData<List<Tag>> getTagsInItem(int itemId) {
@@ -65,8 +66,8 @@ public class DataRepository {
         return appDatabase.databaseDao().getDatabase(databaseId);
     }
 
-    public LiveData<Item> getItem(int itemId) {
-        return null; // TODO
+    public LiveData<ItemEntity> getItem(int itemId) {
+        return appDatabase.itemDao().getItem(itemId);
     }
 
     public LiveData<Location> getLocation(int locationId) {

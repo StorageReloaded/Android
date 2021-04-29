@@ -18,17 +18,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import io.github.storagereloaded.android.R;
-import io.github.storagereloaded.android.viewmodel.DatabaseListViewModel;
+import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.viewmodel.DatabaseViewModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
     DrawerLayout drawer;
+    RecyclerTestAdapter adapter;
     int databaseId = -1;
 
     @Override
@@ -44,10 +48,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         RecyclerView recyclerView = findViewById(R.id.item_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MainActivity.RecyclerTestAdapter((index, item) -> {
+        adapter = new MainActivity.RecyclerTestAdapter((index, item) -> {
             startActivity(new Intent(this, ItemViewActivity.class));
-        }));
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == DatabaseListActivity.REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == DatabaseListActivity.REQUEST_CODE) {
             databaseId = data.getIntExtra(DatabaseListActivity.EXTRA_DATABASE_ID, -1);
         }
     }
@@ -69,29 +75,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DatabaseViewModel model = new ViewModelProvider(this).get(DatabaseViewModel.class);
 
         // If onActivityResult delivered a databaseId
-        if(this.databaseId != -1) {
+        if (this.databaseId != -1) {
             model.setDatabaseId(this.databaseId);
             model.getDatabase().observe(this, databaseEntity -> {
                 Log.d("MainActivity", String.valueOf(databaseEntity));
 
-                if(databaseEntity != null) {
+                if (databaseEntity != null) {
                     toolbar.setTitle(databaseEntity.getName());
                 }
             });
+
+            model.getItems().observe(this, items -> {
+                if (items != null)
+                    adapter.setItems(items);
+            });
+
             return;
         }
 
         // Get the first available database if none was selected
         model.getDatabases().observe(this, databases -> {
-            if(databases != null){
+            if (databases != null) {
                 int databaseId = databases.get(0).getId();
                 model.setDatabaseId(databaseId);
                 model.getDatabase().observe(this, databaseEntity -> {
                     Log.d("MainActivity", String.valueOf(databaseEntity));
 
-                    if(databaseEntity != null) {
+                    if (databaseEntity != null) {
                         toolbar.setTitle(databaseEntity.getName());
                     }
+                });
+
+                model.getItems().observe(this, items -> {
+                    if (items != null)
+                        adapter.setItems(items);
                 });
             }
         });
@@ -124,15 +141,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private interface OnItemClickListener {
-        void onItemClick(int index, Object item);
+        void onItemClick(int index, int itemId);
     }
 
     private static class RecyclerTestAdapter extends RecyclerView.Adapter<MainActivity.RecyclerTestAdapter.ViewHolder> {
-        String[] testItems = {"Title", "Item1165", "Item1178", "Item1165", "Item1178", "Item1165", "Item1178", "Title", "Item1165", "Item1178", "Item1165", "Item1178", "Item1165", "Item1178", "Title", "Item1165", "Item1178", "Item1165", "Item1178", "Item1165", "Item1178"};
+        List<ItemEntity> items;
         MainActivity.OnItemClickListener listener;
 
         public RecyclerTestAdapter(MainActivity.OnItemClickListener listener) {
             this.listener = listener;
+        }
+
+        public void setItems(List<ItemEntity> items) {
+            if (this.items == null) {
+                this.items = items;
+                notifyItemRangeInserted(0, items.size());
+                return;
+            }
+
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return RecyclerTestAdapter.this.items.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return items.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return RecyclerTestAdapter.this.items.get(oldItemPosition).getId() == items.get(newItemPosition).getId();
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    ItemEntity newItem = items.get(newItemPosition);
+                    ItemEntity oldItem = MainActivity.RecyclerTestAdapter.this.items.get(oldItemPosition);
+
+                    return newItem.equals(oldItem);
+                }
+            });
+            this.items = items;
+            result.dispatchUpdatesTo(this);
         }
 
         @NonNull
@@ -145,15 +197,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onBindViewHolder(@NonNull MainActivity.RecyclerTestAdapter.ViewHolder holder, int position) {
             View root = holder.itemView;
-            root.setOnClickListener(v -> listener.onItemClick(position, testItems[position]));
+            ItemEntity item = items.get(position);
+
+            root.setOnClickListener(v -> listener.onItemClick(position, item.getId()));
 
             TextView name = root.findViewById(R.id.name);
-            name.setText(testItems[position]);
+            name.setText(item.getName());
+
+            TextView description = root.findViewById(R.id.description);
+            description.setText(item.getDescription());
         }
 
         @Override
         public int getItemCount() {
-            return testItems.length;
+            return items == null ? 0 : items.size();
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {

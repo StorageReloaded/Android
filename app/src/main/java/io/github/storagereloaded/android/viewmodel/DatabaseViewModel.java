@@ -11,6 +11,7 @@ import java.util.List;
 import io.github.storagereloaded.android.DataRepository;
 import io.github.storagereloaded.android.StoReApp;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
+import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.api.Item;
 
 public class DatabaseViewModel extends AndroidViewModel {
@@ -27,7 +28,7 @@ public class DatabaseViewModel extends AndroidViewModel {
         this.databaseId = databaseId;
     }
 
-    public LiveData<List<Item>> getItems() {
+    public LiveData<List<ItemEntity>> getItems() {
         return repository.getItemsInDatabase(databaseId);
     }
 
