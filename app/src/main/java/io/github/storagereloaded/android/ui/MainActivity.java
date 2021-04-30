@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     RecyclerTestAdapter adapter;
     int databaseId = -1;
+
+    DatabaseViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +82,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
-        DatabaseViewModel model = new ViewModelProvider(this).get(DatabaseViewModel.class);
+        viewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
 
         // If onActivityResult delivered a databaseId
         if (this.databaseId != -1) {
-            model.setDatabaseId(this.databaseId);
-            model.getDatabase().observe(this, databaseEntity -> {
+            viewModel.setDatabaseId(this.databaseId);
+            viewModel.getDatabase().observe(this, databaseEntity -> {
                 Log.d("MainActivity", String.valueOf(databaseEntity));
 
                 if (databaseEntity != null) {
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
 
-            model.getItems().observe(this, items -> {
+            viewModel.getItems().observe(this, items -> {
                 if (items != null)
                     adapter.setItems(items);
             });
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Get the first available database if none was selected
-        model.getDatabases().observe(this, databases -> {
+        viewModel.getDatabases().observe(this, databases -> {
             if (databases != null) {
 
                 if(databases.isEmpty()){
@@ -115,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 noDatabaseLayout.setVisibility(View.GONE);
 
                 int databaseId = databases.get(0).getId();
-                model.setDatabaseId(databaseId);
-                model.getDatabase().observe(this, databaseEntity -> {
+                viewModel.setDatabaseId(databaseId);
+                viewModel.getDatabase().observe(this, databaseEntity -> {
                     Log.d("MainActivity", String.valueOf(databaseEntity));
 
                     if (databaseEntity != null) {
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-                model.getItems().observe(this, items -> {
+                viewModel.getItems().observe(this, items -> {
                     if (items != null)
                         adapter.setItems(items);
                 });
@@ -136,6 +139,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                viewModel.setSearchQuery(newText);
+                return false;
+            }
+        });
         return true;
     }
 

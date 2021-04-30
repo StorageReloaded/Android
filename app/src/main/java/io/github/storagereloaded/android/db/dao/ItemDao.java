@@ -16,6 +16,9 @@ public interface ItemDao {
     @Query("SELECT * FROM items WHERE databaseId=:databaseId")
     LiveData<List<ItemEntity>> getItemsInDatabase(int databaseId);
 
+    @Query("SELECT * FROM items WHERE databaseId=:databaseId AND name LIKE :searchQuery")
+    LiveData<List<ItemEntity>> searchItemsInDatabase(int databaseId, String searchQuery);
+
     @Query("SELECT * FROM items WHERE id=:itemId")
     LiveData<ItemEntity> getItem(int itemId);
 

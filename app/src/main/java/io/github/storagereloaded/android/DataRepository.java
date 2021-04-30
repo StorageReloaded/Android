@@ -55,6 +55,10 @@ public class DataRepository {
         return appDatabase.itemDao().getItemsInDatabase(databaseId);
     }
 
+    public LiveData<List<ItemEntity>> searchItemsInDatabase(int databaseId, String searchQuery) {
+        return appDatabase.itemDao().searchItemsInDatabase(databaseId, searchQuery);
+    }
+
     public LiveData<List<Tag>> getTagsInItem(int itemId) {
         return null; // TODO
     }
