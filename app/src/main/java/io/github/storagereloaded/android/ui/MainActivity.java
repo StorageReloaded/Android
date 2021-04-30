@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.databaseId != -1) {
             viewModel.setDatabaseId(this.databaseId);
             viewModel.getDatabase().observe(this, databaseEntity -> {
-                Log.d("MainActivity", String.valueOf(databaseEntity));
-
                 if (databaseEntity != null) {
                     toolbar.setTitle(databaseEntity.getName());
                 }
@@ -120,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 int databaseId = databases.get(0).getId();
                 viewModel.setDatabaseId(databaseId);
                 viewModel.getDatabase().observe(this, databaseEntity -> {
-                    Log.d("MainActivity", String.valueOf(databaseEntity));
-
                     if (databaseEntity != null) {
                         toolbar.setTitle(databaseEntity.getName());
                     }
