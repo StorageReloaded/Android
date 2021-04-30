@@ -3,6 +3,7 @@ package io.github.storagereloaded.android.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,41 +11,42 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.storagereloaded.android.R;
+import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
+import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
+import io.github.storagereloaded.android.model.CustomProperty;
+import io.github.storagereloaded.android.model.InternalProperty;
+import io.github.storagereloaded.android.viewmodel.ItemViewModel;
 import io.github.storagereloaded.api.DisplayType;
-import io.github.storagereloaded.api.Item;
-import io.github.storagereloaded.api.Property;
-import io.github.storagereloaded.api.Tag;
-import io.github.storagereloaded.api.impl.ItemDummyImpl;
-import io.github.storagereloaded.api.impl.PropertyDummyImpl;
 
 public class ItemViewActivity extends AppCompatActivity {
+
+    public static final String EXTRA_ITEM_ID = "io.github.storagereloaded.android.item_id";
+
+    MaterialToolbar toolbar;
+    PropertiesRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
 
-        Item item = getTestItem(); // Just for testing
-
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        toolbar.setTitle(item.getName());
 
         NestedScrollView scrollView = findViewById(R.id.scroll_view);
         ExtendedFloatingActionButton fab = findViewById(R.id.fab);
-
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < 8)
                 fab.extend();
@@ -60,82 +62,144 @@ public class ItemViewActivity extends AppCompatActivity {
         TextView created = findViewById(R.id.created);
         TextView lastEdited = findViewById(R.id.last_edited);
 
-        // TODO: Set Image
-
-        name.setText(item.getName());
-        description.setText(item.getDescription());
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new PropertiesRecyclerAdapter(item));
+        adapter = new PropertiesRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
 
-        if (item.getTags().isEmpty()) {
-            HorizontalScrollView chipsScroll = findViewById(R.id.chips_scroll_layout);
-            View divider = findViewById(R.id.chips_divider);
-            chipsScroll.setVisibility(View.GONE);
-            divider.setVisibility(View.GONE);
-        } else {
-            for (Tag tag : item.getTags()) {
-                Chip chip = new Chip(this);
-                chip.setText(tag.getName());
-                chips.addView(chip);
-            }
-        }
+        ItemViewModel model = new ViewModelProvider(this).get(ItemViewModel.class);
+        model.setItemId(getIntent().getIntExtra(EXTRA_ITEM_ID, 0));
+        model.getItem().observe(this, item -> {
+            name.setText(item.getName());
+            description.setText(item.getDescription());
+            toolbar.setTitle(item.getName());
+            adapter.setAmount(item.getAmount());
+            adapter.setLocation("Test Location");
 
-        DateFormat format = android.text.format.DateFormat.getLongDateFormat(this);
+            DateFormat format = android.text.format.DateFormat.getLongDateFormat(this);
+            created.setText(format.format(item.getCreated()));
+            lastEdited.setText(format.format(item.getLastEdited()));
+        });
 
-        created.setText(format.format(item.getCreated()));
-        lastEdited.setText(format.format(item.getLastEdited()));
+        model.getInternalProperties().observe(this, internalProperties -> adapter.setInternalProperties(internalProperties));
+        model.getCustomProperties().observe(this, customProperties -> adapter.setCustomProperties(customProperties));
     }
 
-    private Item getTestItem() {
-        Item item = new ItemDummyImpl();
+    private static class FakeProperty {
+        private final int nameId;
+        private final int iconId;
+        private final Object value;
 
-        Property prop = new PropertyDummyImpl();
-        prop.setName("Obi Wan");
-        prop.setDisplayType(DisplayType.UNKNOWN);
-        prop.setValue("Hello There");
-        item.getPropertiesCustom().add(prop);
+        public FakeProperty(int nameId, int iconId, Object value) {
+            this.nameId = nameId;
+            this.iconId = iconId;
+            this.value = value;
+        }
 
-        Property prop2 = new PropertyDummyImpl();
-        prop2.setName("My Range");
-        prop2.setDisplayType(DisplayType.RANGE);
-        prop2.setValue(5);
-        item.getPropertiesCustom().add(prop2);
+        public int getNameId() {
+            return nameId;
+        }
 
-        return item;
+        public int getIconId() {
+            return iconId;
+        }
+
+        public Object getValue() {
+            return value;
+        }
     }
 
     private static class PropertiesRecyclerAdapter extends RecyclerView.Adapter<ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder> {
 
-        PropertyItem[] items;
+        List<FakeProperty> fakeProperties = new ArrayList<>();
+        List<InternalPropertyEntity> internalProperties;
+        List<CustomPropertyEntity> customProperties;
+        //TODO: Attachments
 
-        public PropertiesRecyclerAdapter(Item item) {
-            int len = 2 + item.getPropertiesInternal().size() + item.getPropertiesCustom().size() + item.getAttachments().size();
-            items = new PropertyItem[len];
+        @NonNull
+        @Override
+        public ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attribute, parent, false);
+            return new ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder(view);
+        }
 
-            items[0] = new PropertyItem(R.string.amount, item.getAmount(), R.drawable.ic_baseline_widgets_24);
-            items[1] = new PropertyItem(R.string.location, "Some Location", R.drawable.ic_baseline_place_24);
+        @Override
+        public void onBindViewHolder(@NonNull ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder holder, int position) {
+            View root = holder.itemView;
+            ImageView icon = root.findViewById(R.id.icon);
+            TextView title = root.findViewById(R.id.title);
+            TextView subtitle = root.findViewById(R.id.subtitle);
 
-            int offset = 2;
-            for (int i = 0; i < item.getPropertiesInternal().size(); i++) {
-                Property property = item.getPropertiesInternal().get(i);
-                Integer iconID = getIconIDFromDisplayType(property.getDisplayType());
-                items[i + offset] = new PropertyItem(property.getName(), property.getValue(), iconID);
+            // Amount and Location
+            if (position < getFakePropertiesSize()) {
+                FakeProperty prop = fakeProperties.get(position);
+                icon.setImageResource(prop.getIconId());
+                title.setText(prop.getNameId());
+                subtitle.setText(String.valueOf(prop.getValue()));
+                return;
             }
 
-            offset += item.getPropertiesInternal().size();
-            for (int i = 0; i < item.getPropertiesCustom().size(); i++) {
-                Property property = item.getPropertiesCustom().get(i);
-                Integer iconID = getIconIDFromDisplayType(property.getDisplayType());
-                items[i + offset] = new PropertyItem(property.getName(), property.getValue(), iconID);
+            // Internal Properties
+            if (position < getFakePropertiesSize() + getInternalPropertiesSize()) {
+                InternalProperty prop = internalProperties.get(position - getFakePropertiesSize());
+                icon.setImageResource(prop.getIconId());
+                title.setText(prop.getNameId());
+                subtitle.setText(String.valueOf(prop.getValue()));
+                return;
             }
 
-            offset += item.getPropertiesCustom().size();
-            int i = 0;
-            for (String name : item.getAttachments().keySet()) {
-                items[i + offset] = new PropertyItem(name, R.drawable.ic_baseline_file_present_24);
-                i++;
+            // Custom Properties
+            if (position < getFakePropertiesSize() + getInternalPropertiesSize() + getCustomPropertiesSize()) {
+                CustomProperty prop = customProperties.get(position - getFakePropertiesSize() - getInternalPropertiesSize());
+                icon.setImageDrawable(null);
+                title.setText(prop.getName());
+                subtitle.setText(String.valueOf(prop.getValue()));
             }
+        }
+
+        public void setAmount(int amount) {
+            FakeProperty prop = new FakeProperty(R.string.amount, R.drawable.ic_baseline_widgets_24, amount);
+
+            if (fakeProperties.size() < 1) {
+                fakeProperties.add(prop);
+                notifyItemInserted(0);
+            } else {
+                fakeProperties.set(0, prop);
+                notifyItemChanged(0);
+            }
+        }
+
+        public void setLocation(String location) {
+            FakeProperty prop = new FakeProperty(R.string.location, R.drawable.ic_baseline_place_24, location);
+
+            if (fakeProperties.size() < 2) {
+                fakeProperties.add(prop);
+                notifyItemInserted(1);
+            } else {
+                fakeProperties.set(1, prop);
+                notifyItemChanged(1);
+            }
+        }
+
+        public void setInternalProperties(List<InternalPropertyEntity> internalProperties) {
+            this.internalProperties = internalProperties;
+            notifyItemRangeChanged(getFakePropertiesSize() - 1, getFakePropertiesSize() + internalProperties.size() - 1);
+        }
+
+        public void setCustomProperties(List<CustomPropertyEntity> customProperties) {
+            this.customProperties = customProperties;
+            notifyItemRangeChanged(getFakePropertiesSize() + getInternalPropertiesSize() - 1, getFakePropertiesSize() + getInternalPropertiesSize() + customProperties.size() - 1);
+        }
+
+        private int getFakePropertiesSize() {
+            return fakeProperties == null ? 0 : fakeProperties.size();
+        }
+
+        private int getInternalPropertiesSize() {
+            return internalProperties == null ? 0 : internalProperties.size();
+        }
+
+        private int getCustomPropertiesSize() {
+            return customProperties == null ? 0 : customProperties.size();
         }
 
         private Integer getIconIDFromDisplayType(DisplayType displayType) {
@@ -150,82 +214,14 @@ public class ItemViewActivity extends AppCompatActivity {
             }
         }
 
-        @NonNull
-        @Override
-        public ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attribute, parent, false);
-            return new ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ItemViewActivity.PropertiesRecyclerAdapter.ViewHolder holder, int position) {
-            View root = holder.itemView;
-            TextView title = root.findViewById(R.id.title);
-            TextView subtitle = root.findViewById(R.id.subtitle);
-            ImageView icon = root.findViewById(R.id.icon);
-            View divider = root.findViewById(R.id.divider);
-
-            PropertyItem item = items[position];
-
-            if (item.getName() instanceof Integer)
-                title.setText((Integer) item.getName());
-            else
-                title.setText((String) item.getName());
-
-            if (item.getValue() == null) {
-                subtitle.setVisibility(View.GONE);
-            } else {
-                subtitle.setVisibility(View.VISIBLE);
-                subtitle.setText(item.value.toString());
-            }
-
-            if (item.getIconID() == null)
-                icon.setImageDrawable(null);
-            else
-                icon.setImageResource(item.getIconID());
-
-            if (position == getItemCount() - 1)
-                divider.setVisibility(View.GONE);
-            else
-                divider.setVisibility(View.VISIBLE);
-        }
-
         @Override
         public int getItemCount() {
-            return items.length;
+            return getFakePropertiesSize() + getInternalPropertiesSize() + getCustomPropertiesSize();
         }
 
         private static class ViewHolder extends RecyclerView.ViewHolder {
             public ViewHolder(View view) {
                 super(view);
-            }
-        }
-
-        private static class PropertyItem {
-            private final Object name;
-            private final Object value;
-            private final Integer iconID;
-
-            public PropertyItem(String name, Integer iconID) {
-                this(name, null, iconID);
-            }
-
-            public PropertyItem(Object name, Object value, Integer iconID) {
-                this.name = name;
-                this.value = value;
-                this.iconID = iconID;
-            }
-
-            public Object getName() {
-                return name;
-            }
-
-            public Object getValue() {
-                return value;
-            }
-
-            public Integer getIconID() {
-                return iconID;
             }
         }
     }

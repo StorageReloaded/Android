@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     Toolbar toolbar;
     DrawerLayout drawer;
+    LinearLayout noDatabaseLayout;
+    RecyclerView recyclerView;
     RecyclerTestAdapter adapter;
     int databaseId = -1;
 
@@ -47,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        RecyclerView recyclerView = findViewById(R.id.item_list);
-        adapter = new MainActivity.RecyclerTestAdapter((index, item) -> {
-            startActivity(new Intent(this, ItemViewActivity.class));
+        recyclerView = findViewById(R.id.item_list);
+        adapter = new MainActivity.RecyclerTestAdapter((index, itemId) -> {
+            Intent intent = new Intent(this, ItemViewActivity.class);
+            intent.putExtra(ItemViewActivity.EXTRA_ITEM_ID, itemId);
+            startActivity(intent);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
+
+        noDatabaseLayout = findViewById(R.id.no_database_layout);
     }
 
     @Override
@@ -96,6 +103,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Get the first available database if none was selected
         model.getDatabases().observe(this, databases -> {
             if (databases != null) {
+
+                if(databases.isEmpty()){
+                    // Show the "no database" text and button
+                    recyclerView.setVisibility(View.GONE);
+                    noDatabaseLayout.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                recyclerView.setVisibility(View.VISIBLE);
+                noDatabaseLayout.setVisibility(View.GONE);
+
                 int databaseId = databases.get(0).getId();
                 model.setDatabaseId(databaseId);
                 model.getDatabase().observe(this, databaseEntity -> {

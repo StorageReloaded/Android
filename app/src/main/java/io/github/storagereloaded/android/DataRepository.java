@@ -6,8 +6,9 @@ import java.util.List;
 
 import io.github.storagereloaded.android.db.AppDatabase;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
+import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
-import io.github.storagereloaded.api.Database;
+import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Location;
 import io.github.storagereloaded.api.Property;
@@ -58,8 +59,12 @@ public class DataRepository {
         return null; // TODO
     }
 
-    public LiveData<List<Property>> getPropertiesInItem(int itemId) {
-        return null; // TODO
+    public LiveData<List<InternalPropertyEntity>> getInternalPropertiesInItem(int itemId) {
+        return appDatabase.internalPropertyDoa().getInternalPropertiesFromItem(itemId);
+    }
+
+    public LiveData<List<CustomPropertyEntity>> getCustomPropertiesInItem(int itemId) {
+        return appDatabase.customPropertyDoa().getCustomPropertiesFromItem(itemId);
     }
 
     public LiveData<DatabaseEntity> getDatabase(int databaseId) {

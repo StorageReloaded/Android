@@ -58,6 +58,8 @@
     <string name="edit">Bearbeiten</string>
     <string name="amount">Menge</string>
     <string name="location">Ort</string>
+    <string name="price">Preis</string>
+    <string name="ean13">EAN13</string>
     <string name="created">Erstellt</string>
     <string name="last_edited">Zuletzt bearbeitet</string>
 </resources>
