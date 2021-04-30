@@ -8,6 +8,8 @@ import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.api.Location;
 
 public class DataGenerator {
 
@@ -29,7 +31,7 @@ public class DataGenerator {
         return databases;
     }
 
-    public static List<ItemEntity> generateItems(List<DatabaseEntity> databases) {
+    public static List<ItemEntity> generateItems(List<DatabaseEntity> databases, List<LocationEntity> locations) {
         List<ItemEntity> items = new ArrayList<>();
         Random rnd = new Random();
 
@@ -45,6 +47,7 @@ public class DataGenerator {
                     item.setLastEdited(System.currentTimeMillis());
                     item.setAmount(rnd.nextInt(100));
                     item.setDatabaseId(database.getId());
+                    item.setLocationId(locations.get(rnd.nextInt(locations.size())).getId());
                     items.add(item);
                 }
             }
@@ -97,5 +100,18 @@ public class DataGenerator {
         }
 
         return props;
+    }
+
+    public static List<LocationEntity> generateLocations() {
+        List<LocationEntity> locations = new ArrayList<>();
+
+        for(int i = 0; i < 15; i++) {
+            LocationEntity location = new LocationEntity();
+            location.setName("Location " + i);
+            location.setId(i);
+            locations.add(location);
+        }
+
+        return locations;
     }
 }

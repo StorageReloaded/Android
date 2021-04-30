@@ -13,6 +13,7 @@ import io.github.storagereloaded.android.StoReApp;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.api.Location;
 
 public class ItemViewModel extends AndroidViewModel {
@@ -33,8 +34,8 @@ public class ItemViewModel extends AndroidViewModel {
         return repository.getItem(itemId);
     }
 
-    public LiveData<Location> getLocation() {
-        return repository.getLocation(getItem().getValue().getLocationId());
+    public LiveData<LocationEntity> getLocation(int locationId) {
+        return repository.getLocation(locationId);
     }
 
     public LiveData<List<CustomPropertyEntity>> getCustomProperties() {

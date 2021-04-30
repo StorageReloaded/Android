@@ -25,6 +25,7 @@ import java.util.List;
 import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.model.CustomProperty;
 import io.github.storagereloaded.android.model.InternalProperty;
 import io.github.storagereloaded.android.viewmodel.ItemViewModel;
@@ -73,11 +74,14 @@ public class ItemViewActivity extends AppCompatActivity {
             description.setText(item.getDescription());
             toolbar.setTitle(item.getName());
             adapter.setAmount(item.getAmount());
-            adapter.setLocation("Test Location");
 
             DateFormat format = android.text.format.DateFormat.getLongDateFormat(this);
             created.setText(format.format(item.getCreated()));
             lastEdited.setText(format.format(item.getLastEdited()));
+
+            model.getLocation(item.getLocationId()).observe(ItemViewActivity.this, locationEntity -> {
+                adapter.setLocation(locationEntity);
+            });
         });
 
         model.getInternalProperties().observe(this, internalProperties -> adapter.setInternalProperties(internalProperties));
@@ -128,6 +132,10 @@ public class ItemViewActivity extends AppCompatActivity {
             ImageView icon = root.findViewById(R.id.icon);
             TextView title = root.findViewById(R.id.title);
             TextView subtitle = root.findViewById(R.id.subtitle);
+            View divider = root.findViewById(R.id.divider);
+
+            // Hide the divider on the last item
+            divider.setVisibility((position + 1 == getItemCount()) ? View.GONE : View.VISIBLE);
 
             // Amount and Location
             if (position < getFakePropertiesSize()) {
@@ -168,7 +176,7 @@ public class ItemViewActivity extends AppCompatActivity {
             }
         }
 
-        public void setLocation(String location) {
+        public void setLocation(LocationEntity location) {
             FakeProperty prop = new FakeProperty(R.string.location, R.drawable.ic_baseline_place_24, location);
 
             if (fakeProperties.size() < 2) {

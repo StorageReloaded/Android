@@ -21,12 +21,14 @@ import io.github.storagereloaded.android.db.dao.CustomPropertyDoa;
 import io.github.storagereloaded.android.db.dao.DatabaseDao;
 import io.github.storagereloaded.android.db.dao.InternalPropertyDoa;
 import io.github.storagereloaded.android.db.dao.ItemDao;
+import io.github.storagereloaded.android.db.dao.LocationDao;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
 
-@Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class}, version = 1)
+@Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class, LocationEntity.class}, version = 1)
 @TypeConverters(ObjectConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -42,6 +44,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract InternalPropertyDoa internalPropertyDoa();
 
     public abstract CustomPropertyDoa customPropertyDoa();
+
+    public abstract LocationDao locationDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
@@ -68,14 +72,15 @@ public abstract class AppDatabase extends RoomDatabase {
 
                     // For testing
                     List<DatabaseEntity> databases = DataGenerator.generateDatabases();
-                    List<ItemEntity> items = DataGenerator.generateItems(databases);
+                    List<LocationEntity> locations = DataGenerator.generateLocations();
+                    List<ItemEntity> items = DataGenerator.generateItems(databases, locations);
                     List<InternalPropertyEntity> internalProperties = DataGenerator.generateInternalProperties(items);
                     List<CustomPropertyEntity> customProperties = DataGenerator.generateCustomProperties(items);
-
 
                     // Insert data
                     database.runInTransaction(() -> {
                         database.databaseDao().insertAll(databases);
+                        database.locationDao().insertAll(locations);
                         database.itemDao().insertAll(items);
                         database.internalPropertyDoa().insertAll(internalProperties);
                         database.customPropertyDoa().insertAll(customProperties);

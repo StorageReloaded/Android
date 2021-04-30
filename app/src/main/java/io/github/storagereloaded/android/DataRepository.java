@@ -9,6 +9,7 @@ import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Location;
 import io.github.storagereloaded.api.Property;
@@ -79,8 +80,8 @@ public class DataRepository {
         return appDatabase.itemDao().getItem(itemId);
     }
 
-    public LiveData<Location> getLocation(int locationId) {
-        return null; // TODO
+    public LiveData<LocationEntity> getLocation(int locationId) {
+        return appDatabase.locationDao().getLocation(locationId);
     }
 
     public LiveData<Tag> getTag(int tagId) {
