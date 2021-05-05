@@ -19,7 +19,7 @@
     <string name="nav_account_manage">Account Verwalten</string>
     <string name="nav_account_logout">Ausloggen</string>
     <string name="nav_app">App</string>
-    <string name="nav_app_settings">App Einstellungen</string>
+    <string name="nav_app_settings">Einstellungen</string>
 
     <string name="action_search">Suche</string>
     <string name="action_scanner">Code Scanner</string>
