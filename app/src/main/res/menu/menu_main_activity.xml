@@ -12,9 +12,4 @@
         android:icon="@drawable/ic_baseline_qr_code_scanner_24"
         android:title="@string/action_scanner"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_tags"
-        android:icon="@drawable/ic_baseline_tag_24"
-        android:title="@string/action_tags"
-        app:showAsAction="ifRoom" />
 </menu>

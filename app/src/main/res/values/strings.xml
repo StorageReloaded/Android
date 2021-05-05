@@ -19,6 +19,7 @@
     <string name="nav_database">Database</string>
     <string name="nav_database_new">New Database</string>
     <string name="nav_database_select">Select Database</string>
+    <string name="nav_database_tags">Tags</string>
     <string name="nav_account">Account</string>
     <string name="nav_account_manage">Manage Account</string>
     <string name="nav_account_logout">Log out</string>
@@ -28,7 +29,6 @@
     <!-- Main Action Menu -->
     <string name="action_search">Search</string>
     <string name="action_scanner">Code Scanner</string>
-    <string name="action_tags">Tags</string>
 
     <!-- App Settings Activity -->
     <string name="title_activity_app_settings">App Settings</string>
