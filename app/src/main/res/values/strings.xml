@@ -18,7 +18,6 @@
 
     <string name="nav_database">Database</string>
     <string name="nav_database_new">New Database</string>
-    <string name="nav_database_settings">Database Settings</string>
     <string name="nav_database_select">Select Database</string>
     <string name="nav_account">Account</string>
     <string name="nav_account_manage">Manage Account</string>

@@ -10,10 +10,6 @@
                 android:icon="@drawable/ic_baseline_post_add_24"
                 android:title="@string/nav_database_new" />
             <item
-                android:id="@+id/nav_database_settings"
-                android:icon="@drawable/ic_baseline_settings_applications_24"
-                android:title="@string/nav_database_settings" />
-            <item
                 android:id="@+id/nav_database_select"
                 android:icon="@drawable/ic_baseline_folder_24"
                 android:title="@string/nav_database_select" />

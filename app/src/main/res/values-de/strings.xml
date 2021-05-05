@@ -14,7 +14,6 @@
 
     <string name="nav_database">Datenbank</string>
     <string name="nav_database_new">Neue Datenbank</string>
-    <string name="nav_database_settings">Datenbank Einstellungen</string>
     <string name="nav_database_select">Datenbank Auswählen</string>
     <string name="nav_account">Account</string>
     <string name="nav_account_manage">Account Verwalten</string>
