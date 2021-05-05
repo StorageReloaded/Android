@@ -13,7 +13,7 @@
     <string name="nav_header_app">StoRe</string>
     <string name="nav_header_server">Server Address</string>
     <string name="nav_header_title">Selected Database</string>
-    <string name="nav_header_subtitle">128 Entries</string>
+    <string name="nav_header_subtitle">%1$d Entries</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="nav_database">Database</string>

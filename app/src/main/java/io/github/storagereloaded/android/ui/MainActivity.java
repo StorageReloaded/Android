@@ -2,7 +2,6 @@ package io.github.storagereloaded.android.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.github.storagereloaded.android.R;
+import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.viewmodel.DatabaseViewModel;
 
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     DrawerLayout drawer;
     LinearLayout noDatabaseLayout;
+    TextView navHeaderTitle;
+    TextView navHeaderSubtitle;
     RecyclerView recyclerView;
     RecyclerTestAdapter adapter;
     int databaseId = -1;
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navHeader = navigationView.getHeaderView(0);
+        navHeaderTitle = navHeader.findViewById(R.id.nav_header_database_title);
+        navHeaderSubtitle = navHeader.findViewById(R.id.nav_header_database_subtitle);
 
         recyclerView = findViewById(R.id.item_list);
         adapter = new MainActivity.RecyclerTestAdapter((index, itemId) -> {
@@ -87,17 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // If onActivityResult delivered a databaseId
         if (this.databaseId != -1) {
             viewModel.setDatabaseId(this.databaseId);
-            viewModel.getDatabase().observe(this, databaseEntity -> {
-                if (databaseEntity != null) {
-                    toolbar.setTitle(databaseEntity.getName());
-                }
-            });
-
-            viewModel.getItems().observe(this, items -> {
-                if (items != null)
-                    adapter.setItems(items);
-            });
-
+            viewModel.getDatabase().observe(this, this::displayDatabase);
+            viewModel.getItems().observe(this, this::displayItems);
             return;
         }
 
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel.getDatabases().observe(this, databases -> {
             if (databases != null) {
 
-                if(databases.isEmpty()){
+                if (databases.isEmpty()) {
                     // Show the "no database" text and button
                     recyclerView.setVisibility(View.GONE);
                     noDatabaseLayout.setVisibility(View.VISIBLE);
@@ -117,18 +114,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 int databaseId = databases.get(0).getId();
                 viewModel.setDatabaseId(databaseId);
-                viewModel.getDatabase().observe(this, databaseEntity -> {
-                    if (databaseEntity != null) {
-                        toolbar.setTitle(databaseEntity.getName());
-                    }
-                });
-
-                viewModel.getItems().observe(this, items -> {
-                    if (items != null)
-                        adapter.setItems(items);
-                });
+                viewModel.getDatabase().observe(this, this::displayDatabase);
+                viewModel.getItems().observe(this, this::displayItems);
             }
         });
+    }
+
+    private void displayDatabase(DatabaseEntity databaseEntity) {
+        if (databaseEntity != null) {
+            toolbar.setTitle(databaseEntity.getName());
+            navHeaderTitle.setText(databaseEntity.getName());
+        } else {
+            navHeaderTitle.setText("");
+        }
+    }
+
+    private void displayItems(List<ItemEntity> items) {
+        if (items != null) {
+            adapter.setItems(items);
+            navHeaderSubtitle.setText(getString(R.string.nav_header_subtitle, items.size()));
+        } else {
+            navHeaderSubtitle.setText("");
+        }
     }
 
     @Override

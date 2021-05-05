@@ -9,7 +9,7 @@
     <string name="nav_header_app">StoRe</string>
     <string name="nav_header_server">Server Adresse</string>
     <string name="nav_header_title">Ausgewählte Datenbank</string>
-    <string name="nav_header_subtitle">128 Einträge</string>
+    <string name="nav_header_subtitle">%1$d Einträge</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="nav_database">Datenbank</string>
