@@ -10,6 +10,7 @@ import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.android.db.entity.TagEntity;
 import io.github.storagereloaded.api.Item;
 import io.github.storagereloaded.api.Location;
 import io.github.storagereloaded.api.Property;
@@ -60,8 +61,8 @@ public class DataRepository {
         return appDatabase.itemDao().searchItemsInDatabase(databaseId, searchQuery);
     }
 
-    public LiveData<List<Tag>> getTagsInItem(int itemId) {
-        return null; // TODO
+    public LiveData<List<TagEntity>> getTagsInItem(int itemId) {
+        return appDatabase.tagDao().getTagsInItem(itemId);
     }
 
     public LiveData<List<InternalPropertyEntity>> getInternalPropertiesInItem(int itemId) {

@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -22,13 +23,18 @@ import io.github.storagereloaded.android.db.dao.DatabaseDao;
 import io.github.storagereloaded.android.db.dao.InternalPropertyDoa;
 import io.github.storagereloaded.android.db.dao.ItemDao;
 import io.github.storagereloaded.android.db.dao.LocationDao;
+import io.github.storagereloaded.android.db.dao.TagDao;
+import io.github.storagereloaded.android.db.dao.TagRelationDao;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.android.db.entity.TagEntity;
+import io.github.storagereloaded.android.db.entity.TagRelationEntity;
+import io.github.storagereloaded.android.model.Tag;
 
-@Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class, LocationEntity.class}, version = 1)
+@Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class, LocationEntity.class, TagEntity.class, TagRelationEntity.class}, version = 1)
 @TypeConverters(ObjectConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -46,6 +52,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CustomPropertyDoa customPropertyDoa();
 
     public abstract LocationDao locationDao();
+
+    public abstract TagDao tagDao();
+
+    public abstract TagRelationDao tagRelationDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
@@ -76,6 +86,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     List<ItemEntity> items = DataGenerator.generateItems(databases, locations);
                     List<InternalPropertyEntity> internalProperties = DataGenerator.generateInternalProperties(items);
                     List<CustomPropertyEntity> customProperties = DataGenerator.generateCustomProperties(items);
+                    List<TagEntity> tags = DataGenerator.generateTags();
+                    List<TagRelationEntity> tagRelations = DataGenerator.generateTagRelations(tags, items);
 
                     // Insert data
                     database.runInTransaction(() -> {
@@ -84,6 +96,8 @@ public abstract class AppDatabase extends RoomDatabase {
                         database.itemDao().insertAll(items);
                         database.internalPropertyDoa().insertAll(internalProperties);
                         database.customPropertyDoa().insertAll(customProperties);
+                        database.tagDao().insertAll(tags);
+                        database.tagRelationDao().insertAll(tagRelations);
                     });
 
                     // notify that the database was created and it's ready to be used

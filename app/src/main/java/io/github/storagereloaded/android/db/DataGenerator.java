@@ -9,7 +9,10 @@ import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.android.db.entity.TagEntity;
+import io.github.storagereloaded.android.db.entity.TagRelationEntity;
 import io.github.storagereloaded.api.Location;
+import io.github.storagereloaded.api.Tag;
 
 public class DataGenerator {
 
@@ -60,7 +63,7 @@ public class DataGenerator {
         List<InternalPropertyEntity> props = new ArrayList<>();
 
         int propId = 0;
-        for(ItemEntity item : items) {
+        for (ItemEntity item : items) {
             InternalPropertyEntity p1 = new InternalPropertyEntity();
             p1.setId(propId++);
             p1.setType(InternalPropertyEntity.TYPE_PRICE);
@@ -83,7 +86,7 @@ public class DataGenerator {
         List<CustomPropertyEntity> props = new ArrayList<>();
 
         int propId = 0;
-        for(ItemEntity item : items) {
+        for (ItemEntity item : items) {
             CustomPropertyEntity p1 = new CustomPropertyEntity();
             p1.setId(propId++);
             p1.setItemId(item.getId());
@@ -105,7 +108,7 @@ public class DataGenerator {
     public static List<LocationEntity> generateLocations() {
         List<LocationEntity> locations = new ArrayList<>();
 
-        for(int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             LocationEntity location = new LocationEntity();
             location.setName("Location " + i);
             location.setId(i);
@@ -113,5 +116,35 @@ public class DataGenerator {
         }
 
         return locations;
+    }
+
+    public static List<TagEntity> generateTags() {
+        List<TagEntity> tags = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            TagEntity tag = new TagEntity();
+            tag.setId(i);
+            tag.setName("Test Tag " + i);
+            tags.add(tag);
+        }
+        return tags;
+    }
+
+    public static List<TagRelationEntity> generateTagRelations(List<TagEntity> tags, List<ItemEntity> items) {
+        List<TagRelationEntity> tagRelations = new ArrayList<>();
+
+        Random rnd = new Random();
+        int id = 0;
+        for (ItemEntity item : items) {
+            for (int i = 0; i < 2; i++) {
+                TagRelationEntity tagRelation = new TagRelationEntity();
+                tagRelation.setId(id++);
+                tagRelation.setItemId(item.getId());
+                tagRelation.setTagId(tags.get(rnd.nextInt(tags.size())).getId());
+                tagRelations.add(tagRelation);
+            }
+        }
+
+        return tagRelations;
     }
 }

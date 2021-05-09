@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -26,6 +28,7 @@ import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.android.db.entity.TagEntity;
 import io.github.storagereloaded.android.model.CustomProperty;
 import io.github.storagereloaded.android.model.InternalProperty;
 import io.github.storagereloaded.android.viewmodel.ItemViewModel;
@@ -82,6 +85,22 @@ public class ItemViewActivity extends AppCompatActivity {
             model.getLocation(item.getLocationId()).observe(ItemViewActivity.this, locationEntity -> {
                 adapter.setLocation(locationEntity);
             });
+        });
+
+        model.getTags().observe(this, tags -> {
+            if (tags == null || tags.isEmpty()) {
+                HorizontalScrollView chipsScroll = findViewById(R.id.chips_scroll_layout);
+                View divider = findViewById(R.id.chips_divider);
+                chipsScroll.setVisibility(View.GONE);
+                divider.setVisibility(View.GONE);
+            } else {
+                chips.removeAllViews();
+                for (TagEntity tag : tags) {
+                    Chip chip = new Chip(this);
+                    chip.setText(tag.getName());
+                    chips.addView(chip);
+                }
+            }
         });
 
         model.getInternalProperties().observe(this, internalProperties -> adapter.setInternalProperties(internalProperties));
