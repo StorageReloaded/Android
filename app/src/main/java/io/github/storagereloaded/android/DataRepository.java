@@ -11,10 +11,6 @@ import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
-import io.github.storagereloaded.api.Item;
-import io.github.storagereloaded.api.Location;
-import io.github.storagereloaded.api.Property;
-import io.github.storagereloaded.api.Tag;
 
 public class DataRepository {
 
@@ -39,18 +35,6 @@ public class DataRepository {
 
     public LiveData<List<DatabaseEntity>> getDatabases() {
         return appDatabase.databaseDao().getDatabases();
-    }
-
-    public LiveData<List<Item>> getItems() {
-        return null; // TODO
-    }
-
-    public LiveData<List<Location>> getLocations() {
-        return null; // TODO
-    }
-
-    public LiveData<List<Tag>> getTags() {
-        return null; // TODO
     }
 
     public LiveData<List<ItemEntity>> getItemsInDatabase(int databaseId) {
@@ -83,13 +67,5 @@ public class DataRepository {
 
     public LiveData<LocationEntity> getLocation(int locationId) {
         return appDatabase.locationDao().getLocation(locationId);
-    }
-
-    public LiveData<Tag> getTag(int tagId) {
-        return null; // TODO
-    }
-
-    public LiveData<Property> getProperty(int propertyId) {
-        return null; // TODO
     }
 }
