@@ -14,7 +14,7 @@
     <item
         android:id="@+id/nav_database_tags"
         android:icon="@drawable/ic_baseline_label_24"
-        android:title="@string/nav_database_tags" />
+        android:title="@string/nav_tags" />
 
     <item android:title="@string/nav_account">
         <menu>
