@@ -16,10 +16,9 @@
     <string name="nav_header_subtitle">%1$d Entries</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="nav_database">Database</string>
     <string name="nav_database_new">New Database</string>
     <string name="nav_database_select">Select Database</string>
-    <string name="nav_database_tags">Tags</string>
+    <string name="nav_tags">Tags</string>
     <string name="nav_account">Account</string>
     <string name="nav_account_manage">Manage Account</string>
     <string name="nav_account_logout">Log out</string>

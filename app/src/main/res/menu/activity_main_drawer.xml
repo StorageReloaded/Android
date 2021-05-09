@@ -3,22 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/nav_database">
-        <menu>
-            <item
-                android:id="@+id/nav_database_new"
-                android:icon="@drawable/ic_baseline_post_add_24"
-                android:title="@string/nav_database_new" />
-            <item
-                android:id="@+id/nav_database_select"
-                android:icon="@drawable/ic_baseline_folder_24"
-                android:title="@string/nav_database_select" />
-            <item
-                android:id="@+id/nav_database_tags"
-                android:icon="@drawable/ic_baseline_label_24"
-                android:title="@string/nav_database_tags" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_database_new"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="@string/nav_database_new" />
+    <item
+        android:id="@+id/nav_database_select"
+        android:icon="@drawable/ic_baseline_folder_24"
+        android:title="@string/nav_database_select" />
+    <item
+        android:id="@+id/nav_database_tags"
+        android:icon="@drawable/ic_baseline_label_24"
+        android:title="@string/nav_database_tags" />
 
     <item android:title="@string/nav_account">
         <menu>
