@@ -7,9 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     DrawerLayout drawer;
     LinearLayout noDatabaseLayout;
+
+    FloatingActionButton itemAddButton;
+
     TextView navHeaderTitle;
     TextView navHeaderSubtitle;
     RecyclerView recyclerView;
@@ -58,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View navHeader = navigationView.getHeaderView(0);
         navHeaderTitle = navHeader.findViewById(R.id.nav_header_database_title);
         navHeaderSubtitle = navHeader.findViewById(R.id.nav_header_database_subtitle);
+
+        itemAddButton = findViewById(R.id.fab);
+        itemAddButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, ItemEditActivity.class));
+        });
 
         recyclerView = findViewById(R.id.item_list);
         adapter = new MainActivity.RecyclerTestAdapter((index, itemId) -> {
