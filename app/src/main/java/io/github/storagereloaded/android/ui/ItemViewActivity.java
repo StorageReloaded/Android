@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,8 @@ public class ItemViewActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        int itemId = getIntent().getIntExtra(EXTRA_ITEM_ID, 0);
+
         NestedScrollView scrollView = findViewById(R.id.scroll_view);
         ExtendedFloatingActionButton fab = findViewById(R.id.fab);
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -56,6 +59,12 @@ public class ItemViewActivity extends AppCompatActivity {
                 fab.extend();
             else
                 fab.shrink();
+        });
+
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ItemEditActivity.class);
+            intent.putExtra(EXTRA_ITEM_ID, itemId);
+            startActivity(intent);
         });
 
         ImageView image = findViewById(R.id.image);
@@ -71,7 +80,7 @@ public class ItemViewActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         ItemViewModel model = new ViewModelProvider(this).get(ItemViewModel.class);
-        model.setItemId(getIntent().getIntExtra(EXTRA_ITEM_ID, 0));
+        model.setItemId(itemId);
         model.getItem().observe(this, item -> {
             name.setText(item.getName());
             description.setText(item.getDescription());
