@@ -64,4 +64,7 @@
     <string name="ean13">EAN13</string>
     <string name="created">Created</string>
     <string name="last_edited">Last edited</string>
+
+    <!-- Item Edit Activity -->
+    <string name="new_item">New Item</string>
 </resources>
