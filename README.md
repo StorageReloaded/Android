@@ -7,6 +7,7 @@
 
 ## The Android App for the Storage Reloaded Project
 
+![Anroid Version](https://img.shields.io/badge/android-5.1%2B-brightgreen.svg)
 [![Android CI](https://github.com/StorageReloaded/Android/actions/workflows/android.yml/badge.svg)](https://github.com/StorageReloaded/Android/actions/workflows/android.yml)
 [![License](https://img.shields.io/github/license/StorageReloaded/Android)](https://github.com/StorageReloaded/Android/blob/master/LICENSE) 
 
