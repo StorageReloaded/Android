@@ -127,4 +127,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public void saveItem(ItemEntity item) {
         appExecutors.diskIO().execute(() -> itemDao().insert(item));
     }
+
+    public void saveDatabase(DatabaseEntity database) {
+        appExecutors.diskIO().execute(() -> databaseDao().insert(database));
+    }
 }

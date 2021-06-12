@@ -26,6 +26,7 @@ public class DatabaseViewModel extends AndroidViewModel {
     private final SavedStateHandle savedStateHandle;
     private final LiveData<List<ItemEntity>> items;
     private int databaseId;
+    public boolean loaded = false;
 
     public DatabaseViewModel(@NonNull Application application, @NonNull SavedStateHandle savedStateHandle) {
         super(application);
@@ -58,5 +59,9 @@ public class DatabaseViewModel extends AndroidViewModel {
 
     public LiveData<List<DatabaseEntity>> getDatabases() {
         return repository.getDatabases();
+    }
+
+    public void saveDatabase(DatabaseEntity database) {
+        repository.saveDatabase(database);
     }
 }

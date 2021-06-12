@@ -72,4 +72,8 @@ public class DataRepository {
     public void saveItem(ItemEntity item) {
         appDatabase.saveItem(item);
     }
+
+    public void saveDatabase(DatabaseEntity database) {
+        appDatabase.saveDatabase(database);
+    }
 }

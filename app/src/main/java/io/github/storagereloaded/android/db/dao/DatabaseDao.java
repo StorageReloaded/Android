@@ -20,4 +20,7 @@ public interface DatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<DatabaseEntity> database);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(DatabaseEntity database);
 }
