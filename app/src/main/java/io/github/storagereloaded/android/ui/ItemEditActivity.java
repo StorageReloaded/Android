@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import io.github.storagereloaded.android.R;
@@ -41,7 +42,7 @@ public class ItemEditActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> showUnsavedDialog());
 
         name = ((TextInputLayout) findViewById(R.id.name)).getEditText();
         description = ((TextInputLayout) findViewById(R.id.description)).getEditText();
@@ -77,6 +78,11 @@ public class ItemEditActivity extends AppCompatActivity {
             description.setText(savedInstanceState.getString(ITEM_DESCRIPTION));
             amount.setText(String.valueOf(savedInstanceState.getInt(ITEM_AMOUNT)));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showUnsavedDialog();
     }
 
     @Override
@@ -131,5 +137,15 @@ public class ItemEditActivity extends AppCompatActivity {
         item.setAmount(Integer.parseInt(amount.getText().toString()));
 
         return item;
+    }
+
+    private void showUnsavedDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.unsaved_dialog_title);
+        builder.setMessage(R.string.unsaved_dialog_description);
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> finish());
+        builder.setNegativeButton(android.R.string.cancel, null);
+
+        builder.create().show();
     }
 }
