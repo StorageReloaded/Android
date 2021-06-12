@@ -13,10 +13,10 @@ import io.github.storagereloaded.android.db.entity.ItemEntity;
 @Dao
 public interface ItemDao {
 
-    @Query("SELECT * FROM items WHERE databaseId=:databaseId")
+    @Query("SELECT * FROM items WHERE databaseId=:databaseId ORDER BY name")
     LiveData<List<ItemEntity>> getItemsInDatabase(int databaseId);
 
-    @Query("SELECT * FROM items WHERE databaseId=:databaseId AND name LIKE :searchQuery")
+    @Query("SELECT * FROM items WHERE databaseId=:databaseId AND name LIKE :searchQuery ORDER BY name")
     LiveData<List<ItemEntity>> searchItemsInDatabase(int databaseId, String searchQuery);
 
     @Query("SELECT * FROM items WHERE id=:itemId")
