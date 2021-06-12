@@ -10,7 +10,7 @@ import io.github.storagereloaded.android.model.Item;
 @Entity(tableName = "items")
 public class ItemEntity implements Item {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String description;

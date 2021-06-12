@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         itemAddButton = findViewById(R.id.fab);
         itemAddButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, ItemEditActivity.class));
+            Intent intent = new Intent(this, ItemEditActivity.class);
+            intent.putExtra(ItemEditActivity.EXTRA_DATABASE_ID, databaseId);
+            startActivity(intent);
         });
 
         recyclerView = findViewById(R.id.item_list);
@@ -116,13 +118,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Show the "no database" text and button
                     recyclerView.setVisibility(View.GONE);
                     noDatabaseLayout.setVisibility(View.VISIBLE);
+                    itemAddButton.setVisibility(View.INVISIBLE);
                     return;
                 }
 
                 recyclerView.setVisibility(View.VISIBLE);
                 noDatabaseLayout.setVisibility(View.GONE);
+                itemAddButton.setVisibility(View.VISIBLE);
 
-                int databaseId = databases.get(0).getId();
+                this.databaseId = databases.get(0).getId();
                 viewModel.setDatabaseId(databaseId);
                 viewModel.getDatabase().observe(this, this::displayDatabase);
                 viewModel.getItems().observe(this, this::displayItems);

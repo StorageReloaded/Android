@@ -67,4 +67,8 @@
 
     <!-- Item Edit Activity -->
     <string name="new_item">New Item</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="add_tag">Add tag</string>
 </resources>

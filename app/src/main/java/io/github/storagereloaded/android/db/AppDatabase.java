@@ -58,12 +58,14 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TagRelationDao tagRelationDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
+    AppExecutors appExecutors;
 
     public static AppDatabase getInstance(Context context, AppExecutors executors) {
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
                     instance = buildDatabase(context.getApplicationContext(), executors);
+                    instance.appExecutors = executors;
                     instance.updateDatabaseCreated(context.getApplicationContext());
                 }
             }
@@ -120,5 +122,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public LiveData<Boolean> getDatabaseCreated() {
         return isDatabaseCreated;
+    }
+
+    public void saveItem(ItemEntity item) {
+        appExecutors.diskIO().execute(() -> itemDao().insert(item));
     }
 }

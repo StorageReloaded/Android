@@ -68,4 +68,8 @@ public class DataRepository {
     public LiveData<LocationEntity> getLocation(int locationId) {
         return appDatabase.locationDao().getLocation(locationId);
     }
+
+    public void saveItem(ItemEntity item) {
+        appDatabase.saveItem(item);
+    }
 }

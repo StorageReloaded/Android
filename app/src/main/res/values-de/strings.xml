@@ -63,4 +63,8 @@
 
     <!-- Item Edit Activity -->
     <string name="new_item">Neues Element</string>
+    <string name="edit_item">Element Bearbeiten</string>
+    <string name="name">Name</string>
+    <string name="description">Beschreibung</string>
+    <string name="add_tag">Tag hinzufügen</string>
 </resources>
