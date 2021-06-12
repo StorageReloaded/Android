@@ -8,7 +8,7 @@ import io.github.storagereloaded.android.model.Database;
 @Entity(tableName = "databases")
 public class DatabaseEntity implements Database {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
 
