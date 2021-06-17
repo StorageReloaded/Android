@@ -69,6 +69,10 @@ public class DataRepository {
         return appDatabase.locationDao().getLocation(locationId);
     }
 
+    public LiveData<List<TagEntity>> getTags() {
+        return appDatabase.tagDao().getTags();
+    }
+
     public void saveItem(ItemEntity item) {
         appDatabase.saveItem(item);
     }

@@ -72,4 +72,8 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="add_tag">Add tag</string>
+
+    <!-- Tag List Activity -->
+    <string name="title_activity_tag_list">Tags</string>
+    <string name="edit_tag">Edit Tag</string>
 </resources>

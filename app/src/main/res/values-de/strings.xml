@@ -68,4 +68,8 @@
     <string name="name">Name</string>
     <string name="description">Beschreibung</string>
     <string name="add_tag">Tag hinzufügen</string>
+
+    <!-- Tag List Activity -->
+    <string name="title_activity_tag_list">Tags</string>
+    <string name="edit_tag">Tag Bearbeiten</string>
 </resources>
