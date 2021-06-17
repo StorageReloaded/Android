@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -42,12 +43,15 @@ public class ItemViewActivity extends AppCompatActivity {
     MaterialToolbar toolbar;
     PropertiesRecyclerAdapter adapter;
 
+    ItemViewModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
 
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         int itemId = getIntent().getIntExtra(EXTRA_ITEM_ID, 0);
@@ -79,9 +83,12 @@ public class ItemViewActivity extends AppCompatActivity {
         adapter = new PropertiesRecyclerAdapter();
         recyclerView.setAdapter(adapter);
 
-        ItemViewModel model = new ViewModelProvider(this).get(ItemViewModel.class);
+        model = new ViewModelProvider(this).get(ItemViewModel.class);
         model.setItemId(itemId);
         model.getItem().observe(this, item -> {
+            if(item == null)
+                return;
+
             name.setText(item.getName());
             description.setText(item.getDescription());
             toolbar.setTitle(item.getName());
@@ -114,6 +121,17 @@ public class ItemViewActivity extends AppCompatActivity {
 
         model.getInternalProperties().observe(this, internalProperties -> adapter.setInternalProperties(internalProperties));
         model.getCustomProperties().observe(this, customProperties -> adapter.setCustomProperties(customProperties));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete_item) {
+            model.deleteItem();
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private static class FakeProperty {

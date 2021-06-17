@@ -54,4 +54,8 @@ public class ItemViewModel extends AndroidViewModel {
     public void saveItem(ItemEntity item) {
         repository.saveItem(item);
     }
+
+    public void deleteItem() {
+        repository.deleteItem(itemId);
+    }
 }

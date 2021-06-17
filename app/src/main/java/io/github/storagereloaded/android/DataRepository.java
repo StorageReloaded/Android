@@ -76,4 +76,8 @@ public class DataRepository {
     public void saveDatabase(DatabaseEntity database) {
         appDatabase.saveDatabase(database);
     }
+
+    public void deleteItem(int itemId) {
+        appDatabase.deleteItem(itemId);
+    }
 }

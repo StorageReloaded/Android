@@ -54,6 +54,7 @@
 
     <!-- Item View Activity -->
     <string name="edit">Bearbeiten</string>
+    <string name="delete_item">Element Löschen</string>
     <string name="amount">Menge</string>
     <string name="location">Ort</string>
     <string name="price">Preis</string>

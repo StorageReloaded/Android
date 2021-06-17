@@ -27,4 +27,7 @@ public interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ItemEntity item);
+
+    @Query("DELETE FROM items WHERE id=:itemId")
+    void deleteItem(int itemId);
 }
