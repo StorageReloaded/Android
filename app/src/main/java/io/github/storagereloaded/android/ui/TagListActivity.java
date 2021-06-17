@@ -43,9 +43,9 @@ public class TagListActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_TAG_ID, tagId);
                 setResult(RESULT_OK, intent);
             } else {
-                //Intent intent = new Intent(getApplicationContext(), TagEditActivity.class);
-                //intent.putExtra(EXTRA_TAG_ID, tagId);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), TagEditActivity.class);
+                intent.putExtra(EXTRA_TAG_ID, tagId);
+                startActivity(intent);
             }
         });
 
@@ -54,7 +54,7 @@ public class TagListActivity extends AppCompatActivity {
 
         FloatingActionButton itemAddButton = findViewById(R.id.fab);
         itemAddButton.setOnClickListener(v -> {
-            //startActivity(new Intent(this, TagEditActivity.class));
+            startActivity(new Intent(this, TagEditActivity.class));
         });
 
         setResult(RESULT_CANCELED);

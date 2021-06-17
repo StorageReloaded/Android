@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
-        <activity android:name=".ui.TagListActivity"></activity>
+        <activity android:name=".ui.TagEditActivity"></activity>
+        <activity android:name=".ui.TagListActivity" />
         <activity android:name=".ui.ItemEditActivity" />
         <activity android:name=".ui.ItemViewActivity" />
         <activity

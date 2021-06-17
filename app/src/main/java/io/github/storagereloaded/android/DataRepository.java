@@ -73,6 +73,10 @@ public class DataRepository {
         return appDatabase.tagDao().getTags();
     }
 
+    public LiveData<TagEntity> getTag(int tagId) {
+        return appDatabase.tagDao().getTag(tagId);
+    }
+
     public void saveItem(ItemEntity item) {
         appDatabase.saveItem(item);
     }
@@ -81,7 +85,13 @@ public class DataRepository {
         appDatabase.saveDatabase(database);
     }
 
+    public void saveTag(TagEntity tag) {
+        appDatabase.saveTag(tag);
+    }
+
     public void deleteItem(int itemId) {
         appDatabase.deleteItem(itemId);
     }
+
+
 }

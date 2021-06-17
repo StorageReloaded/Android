@@ -76,4 +76,8 @@
     <!-- Tag List Activity -->
     <string name="title_activity_tag_list">Tags</string>
     <string name="edit_tag">Edit Tag</string>
+
+    <!-- Tag Edit Activity -->
+    <string name="title_activity_tag_edit">Edit Tag</string>
+    <string name="tag_name">Tag Name</string>
 </resources>

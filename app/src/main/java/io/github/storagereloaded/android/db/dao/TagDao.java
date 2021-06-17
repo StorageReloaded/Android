@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
 
 @Dao
@@ -18,6 +19,12 @@ public interface TagDao {
     @Query("SELECT * FROM tags ORDER BY name")
     LiveData<List<TagEntity>> getTags();
 
+    @Query("SELECT * FROM tags WHERE id=:tagId")
+    LiveData<TagEntity> getTag(int tagId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<TagEntity> tags);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(TagEntity tag);
 }
