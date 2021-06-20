@@ -2,7 +2,6 @@ package io.github.storagereloaded.android.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,14 @@ public class LocationListActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        FloatingActionButton itemAddButton = findViewById(R.id.fab);
+        itemAddButton.setOnClickListener(v -> {
+            //Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
+            //if(getIntent().hasExtra(EXTRA_DATABASE_ID))
+            //    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
+            //startActivity(intent);
+        });
+
         RecyclerView recyclerView = findViewById(R.id.location_list);
         LocationsRecyclerAdapter adapter = new LocationsRecyclerAdapter((index, locationId) -> {
             if (getIntent().getBooleanExtra(EXTRA_CHOOSE_MODE, false)) {
@@ -52,24 +59,20 @@ public class LocationListActivity extends AppCompatActivity {
                 //    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
                 //startActivity(intent);
             }
-        }, true /*!getIntent().hasExtra(EXTRA_DATABASE_ID)*/);
+        }, !getIntent().hasExtra(EXTRA_DATABASE_ID));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        FloatingActionButton itemAddButton = findViewById(R.id.fab);
-        itemAddButton.setOnClickListener(v -> {
-            //Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
-            //if(getIntent().hasExtra(EXTRA_DATABASE_ID))
-            //    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
-            //startActivity(intent);
-        });
+        LocationViewModel model = new ViewModelProvider(this).get(LocationViewModel.class);
+        if (getIntent().hasExtra(EXTRA_DATABASE_ID)) {
+            model.getLocationsFromDatabase(getIntent().getIntExtra(EXTRA_DATABASE_ID, 0)).observe(this, adapter::setLocations);
+        } else {
+            model.getLocations().observe(this, adapter::setLocations);
+            model.getDatabases().observe(this, adapter::setDatabases);
+        }
 
         setResult(RESULT_CANCELED);
-
-        LocationViewModel model = new ViewModelProvider(this).get(LocationViewModel.class);
-        model.getLocations().observe(this, adapter::setLocations);
-        model.getDatabases().observe(this, adapter::setDatabases);
     }
 
     private interface OnItemClickListener {
