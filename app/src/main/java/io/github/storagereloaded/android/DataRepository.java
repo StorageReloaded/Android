@@ -97,11 +97,15 @@ public class DataRepository {
         appDatabase.saveTag(tag);
     }
 
+    public void saveLocation(LocationEntity location) {
+        appDatabase.saveLocation(location);
+    }
+
     public void deleteItem(int itemId) {
         appDatabase.deleteItem(itemId);
     }
 
-    public void saveLocation(LocationEntity location) {
-        appDatabase.saveLocation(location);
+    public void deleteLocation(int locationId) {
+        appDatabase.deleteLocation(locationId);
     }
 }

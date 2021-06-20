@@ -85,4 +85,9 @@
     <!-- Location List Activity -->
     <string name="title_activity_location_list">Locations</string>
     <string name="fab_add_location">Add Location</string>
+
+    <!-- Location Edit Activity -->
+    <string name="title_activity_location_edit">Edit Location</string>
+    <string name="location_name">Location Name</string>
+    <string name="database">Database</string>
 </resources>

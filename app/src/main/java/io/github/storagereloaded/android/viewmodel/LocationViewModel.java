@@ -39,6 +39,10 @@ public class LocationViewModel extends AndroidViewModel {
         repository.saveLocation(location);
     }
 
+    public void deleteLocation(int locationId) {
+        repository.deleteLocation(locationId);
+    }
+
     public LiveData<List<DatabaseEntity>> getDatabases() {
         return repository.getDatabases();
     }

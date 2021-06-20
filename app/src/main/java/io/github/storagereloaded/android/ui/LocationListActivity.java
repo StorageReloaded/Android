@@ -40,10 +40,10 @@ public class LocationListActivity extends AppCompatActivity {
 
         FloatingActionButton itemAddButton = findViewById(R.id.fab);
         itemAddButton.setOnClickListener(v -> {
-            //Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
-            //if(getIntent().hasExtra(EXTRA_DATABASE_ID))
-            //    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
-            //startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
+            if(getIntent().hasExtra(EXTRA_DATABASE_ID))
+                intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
+            startActivity(intent);
         });
 
         RecyclerView recyclerView = findViewById(R.id.location_list);
@@ -53,11 +53,11 @@ public class LocationListActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_LOCATION_ID, locationId);
                 setResult(RESULT_OK, intent);
             } else {
-                //Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
-                //intent.putExtra(EXTRA_LOCATION_ID, locationId);
-                //if(getIntent().hasExtra(EXTRA_DATABASE_ID))
-                //    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
+                intent.putExtra(EXTRA_LOCATION_ID, locationId);
+                if(getIntent().hasExtra(EXTRA_DATABASE_ID))
+                    intent.putExtra(EXTRA_DATABASE_ID, getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
+                startActivity(intent);
             }
         }, !getIntent().hasExtra(EXTRA_DATABASE_ID));
 
