@@ -194,6 +194,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // For testing
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
+            case R.id.nav_account:
+                // For testing
+                startActivity(new Intent(this, ListActivityBase.class));
+                break;
         }
 
         drawer.closeDrawers();
