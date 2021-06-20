@@ -11,6 +11,7 @@ public class LocationEntity implements Location {
     @PrimaryKey
     private int id;
     private String name;
+    private int databaseId;
 
     @Override
     public int getId() {
@@ -30,6 +31,16 @@ public class LocationEntity implements Location {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int getDatabaseId() {
+        return databaseId;
+    }
+
+    @Override
+    public void setDatabaseId(int databaseId) {
+        this.databaseId = databaseId;
     }
 
     @Override

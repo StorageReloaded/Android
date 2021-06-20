@@ -15,6 +15,10 @@
         android:id="@+id/nav_database_tags"
         android:icon="@drawable/ic_baseline_label_24"
         android:title="@string/nav_tags" />
+    <item
+        android:id="@+id/nav_database_locations"
+        android:icon="@drawable/ic_baseline_place_24"
+        android:title="@string/nav_locations" />
 
     <item android:title="@string/nav_account">
         <menu>

@@ -184,6 +184,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_database_tags:
                 startActivity(new Intent(this, TagListActivity.class));
                 break;
+            case R.id.nav_database_locations:
+                startActivity(new Intent(this, LocationListActivity.class));
+                break;
             case R.id.nav_app_settings:
                 startActivity(new Intent(this, AppSettingsActivity.class));
                 break;

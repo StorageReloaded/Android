@@ -139,4 +139,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public void deleteItem(int itemId) {
         appExecutors.diskIO().execute(() -> itemDao().deleteItem(itemId));
     }
+
+    public void saveLocation(LocationEntity location) {
+        appExecutors.diskIO().execute(() -> locationDao().insert(location));
+    }
 }

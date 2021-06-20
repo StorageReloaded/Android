@@ -15,6 +15,15 @@ public interface LocationDao {
     @Query("SELECT * FROM locations WHERE id=:locationId")
     LiveData<LocationEntity> getLocation(int locationId);
 
+    @Query("SELECT * FROM locations ORDER BY name")
+    LiveData<List<LocationEntity>> getLocations();
+
+    @Query("SELECT * FROM locations WHERE databaseId=:databaseId ORDER BY name")
+    LiveData<List<LocationEntity>> getLocationsFromDatabase(int databaseId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<LocationEntity> locations);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(LocationEntity locations);
 }

@@ -19,6 +19,7 @@
     <string name="nav_database_new">New Database</string>
     <string name="nav_database_select">Select Database</string>
     <string name="nav_tags">Tags</string>
+    <string name="nav_locations">Locations</string>
     <string name="nav_account">Account</string>
     <string name="nav_account_manage">Manage Account</string>
     <string name="nav_account_logout">Log out</string>
@@ -80,4 +81,8 @@
     <!-- Tag Edit Activity -->
     <string name="title_activity_tag_edit">Edit Tag</string>
     <string name="tag_name">Tag Name</string>
+
+    <!-- Location List Activity -->
+    <string name="title_activity_location_list">Locations</string>
+    <string name="fab_add_location">Add Location</string>
 </resources>
