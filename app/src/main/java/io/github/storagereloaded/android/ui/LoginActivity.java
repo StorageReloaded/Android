@@ -1,7 +1,7 @@
 package io.github.storagereloaded.android.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,11 +10,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Random;
 
 import io.github.storagereloaded.android.R;
+import io.github.storagereloaded.android.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,10 +35,14 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout errorLayout;
     TextView errorText;
 
+    LoginViewModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        model = new ViewModelProvider(this).get(LoginViewModel.class);
 
         serverAddress = findViewById(R.id.server_address);
         username = findViewById(R.id.username);
@@ -65,20 +73,29 @@ public class LoginActivity extends AppCompatActivity {
         serverAddress.requestFocus();
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     private void serverNext() {
         setMessage(getString(R.string.server_check), false);
 
-        // For testing
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> serverCheckComplete(new Random().nextInt(2)), 1000);
+        model.checkServer(serverAddress.getEditText().getText().toString()).observe(this, success -> {
+            serverCheckComplete(success ? 0 : 1);
+        });
     }
 
     private void passwordNext() {
         setMessage(getString(R.string.credential_check), false);
 
-        // For testing
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> userCheckComplete(new Random().nextInt(2) * 2), 1000);
+        String serverAddress = this.serverAddress.getEditText().getText().toString();
+        String username = this.username.getEditText().getText().toString();
+        String password = this.password.getEditText().getText().toString();
+
+        model.auth(serverAddress, username, password).observe(this, sessionId -> {
+            userCheckComplete(sessionId != null ? 0 : 2, sessionId, serverAddress);
+        });
     }
 
     private void serverCheckComplete(int status) {
@@ -90,11 +107,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void userCheckComplete(int status) {
+    private void userCheckComplete(int status, String sessionId, String serverAddress) {
         displayStatus(status);
 
         if (status == STATUS_OK) {
-            // TODO: save server url and session id
+            SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(getString(R.string.preferences_server_address), serverAddress);
+            editor.putString(getString(R.string.preferences_session_id), sessionId);
+            editor.apply();
             finish();
         } else {
             username.requestFocus();

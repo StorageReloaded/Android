@@ -1,6 +1,8 @@
 package io.github.storagereloaded.android.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
+        if(!viewModel.isUserLoggedIn())
+            startActivity(new Intent(this, LoginActivity.class));
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -99,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
-        viewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
-
         // If onActivityResult delivered a databaseId
         if (this.databaseId != -1) {
             viewModel.setDatabaseId(this.databaseId);
@@ -131,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewModel.getItems().observe(this, this::displayItems);
             }
         });
+
+        //viewModel.checkConnection();
     }
 
     private void displayDatabase(DatabaseEntity databaseEntity) {

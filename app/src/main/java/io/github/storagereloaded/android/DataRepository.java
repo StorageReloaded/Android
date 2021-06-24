@@ -5,28 +5,31 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import io.github.storagereloaded.android.db.AppDatabase;
+import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.InternalPropertyEntity;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
-import io.github.storagereloaded.android.db.entity.CustomPropertyEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
+import io.github.storagereloaded.api.StoRe;
 
 public class DataRepository {
 
     private static DataRepository instance;
 
     private AppDatabase appDatabase;
+    private StoRe stoRe;
 
-    private DataRepository(AppDatabase appDatabase) {
+    private DataRepository(AppDatabase appDatabase, StoRe stoRe) {
         this.appDatabase = appDatabase;
+        this.stoRe = stoRe;
     }
 
-    public static DataRepository getInstance(AppDatabase appDatabase) {
+    public static DataRepository getInstance(AppDatabase appDatabase, StoRe stoRe) {
         if (instance == null) {
             synchronized (DataRepository.class) {
                 if (instance == null) {
-                    instance = new DataRepository(appDatabase);
+                    instance = new DataRepository(appDatabase, stoRe);
                 }
             }
         }
@@ -107,5 +110,17 @@ public class DataRepository {
 
     public void deleteLocation(int locationId) {
         appDatabase.deleteLocation(locationId);
+    }
+
+    public LiveData<Boolean> checkConnection() {
+        LiveData<Boolean> data = new LiveData<Boolean>() {
+        };
+
+        stoRe.info();
+        return data;
+    }
+
+    public boolean isUserLoggedIn() {
+        return stoRe.hasLogin();
     }
 }

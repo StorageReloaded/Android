@@ -66,4 +66,12 @@ public class DatabaseViewModel extends AndroidViewModel {
     public void saveDatabase(DatabaseEntity database) {
         repository.saveDatabase(database);
     }
+
+    public LiveData<Boolean> checkConnection() {
+        return repository.checkConnection();
+    }
+
+    public boolean isUserLoggedIn() {
+        return repository.isUserLoggedIn();
+    }
 }
