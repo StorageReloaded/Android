@@ -15,7 +15,7 @@ public class InternalPropertyEntity implements InternalProperty {
     private static final int VALUE_TYPE_INT = 0;
     private static final int VALUE_TYPE_STRING = 1;
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int itemId;
     private String type;

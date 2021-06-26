@@ -11,7 +11,7 @@ import io.github.storagereloaded.android.ui.ListActivityBase;
 @Entity(tableName = "tags")
 public class TagEntity implements Tag, ListActivityBase.IdObject {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
 

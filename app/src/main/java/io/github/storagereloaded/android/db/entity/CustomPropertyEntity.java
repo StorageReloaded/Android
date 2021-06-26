@@ -8,7 +8,7 @@ import io.github.storagereloaded.android.model.CustomProperty;
 @Entity(tableName = "custom_properties")
 public class CustomPropertyEntity implements CustomProperty {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int itemId;
     private String name;

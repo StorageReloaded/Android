@@ -8,7 +8,7 @@ import io.github.storagereloaded.android.model.Location;
 @Entity(tableName = "locations")
 public class LocationEntity implements Location {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private int databaseId;
