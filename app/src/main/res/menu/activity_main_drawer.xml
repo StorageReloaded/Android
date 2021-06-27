@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -20,25 +21,25 @@
         android:icon="@drawable/ic_baseline_place_24"
         android:title="@string/nav_locations" />
 
-    <item android:title="@string/nav_account">
-        <menu>
-            <item
-                android:id="@+id/nav_account"
-                android:icon="@drawable/ic_baseline_person_24"
-                android:title="@string/nav_account_manage" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_baseline_logout_24"
-                android:title="@string/nav_account_logout" />
-        </menu>
-    </item>
-
     <item android:title="@string/nav_app">
         <menu>
             <item
                 android:id="@+id/nav_app_settings"
                 android:icon="@drawable/ic_baseline_settings_24"
                 android:title="@string/nav_app_settings" />
+        </menu>
+    </item>
+    <item android:title="@string/nav_account">
+        <menu>
+            <item
+                android:id="@+id/nav_account"
+                android:icon="@drawable/ic_baseline_person_24"
+                android:title="@string/nav_account_manage"
+                android:visible="false" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_logout_24"
+                android:title="@string/nav_account_logout" />
         </menu>
     </item>
 </menu>
