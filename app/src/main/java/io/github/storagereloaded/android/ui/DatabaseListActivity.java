@@ -31,7 +31,7 @@ public class DatabaseListActivity extends ListActivityBase<DatabaseEntity> {
 
     @Override
     void onAddButtonPressed(View view) {
-        startActivity(new Intent(this, TagEditActivity.class));
+        startActivity(new Intent(this, DatabaseSettingsActivity.class));
     }
 
     ItemClickListener itemClickListener = new ItemClickListener() {
