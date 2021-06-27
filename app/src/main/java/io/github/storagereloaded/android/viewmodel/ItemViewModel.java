@@ -21,6 +21,8 @@ public class ItemViewModel extends AndroidViewModel {
     private final DataRepository repository;
     private int itemId = 0;
     public boolean loaded = false;
+    public boolean locationLoaded;
+    public boolean tagsLoaded;
 
     public ItemViewModel(@NonNull Application application) {
         super(application);

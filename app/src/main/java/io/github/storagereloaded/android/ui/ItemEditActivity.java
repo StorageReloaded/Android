@@ -3,18 +3,23 @@ package io.github.storagereloaded.android.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
+import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.viewmodel.ItemViewModel;
 
 public class ItemEditActivity extends AppCompatActivity {
@@ -22,6 +27,7 @@ public class ItemEditActivity extends AppCompatActivity {
     private static final String ITEM_NAME = "item_name";
     private static final String ITEM_DESCRIPTION = "item_description";
     private static final String ITEM_AMOUNT = "item_amount";
+    private static final String LOCATION_ID = "location_id";
     public static final String EXTRA_DATABASE_ID = "io.github.storagereloaded.android.database_id";
 
     int itemId = 0;
@@ -32,6 +38,12 @@ public class ItemEditActivity extends AppCompatActivity {
     EditText name;
     EditText description;
     EditText amount;
+
+    LocationAdapter locationAdapter;
+
+    LinearLayout tagLayout;
+    TextView tagHint;
+    ChipGroup tags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +56,19 @@ public class ItemEditActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
         toolbar.setNavigationOnClickListener(v -> showUnsavedDialog());
 
-        name = ((TextInputLayout) findViewById(R.id.name)).getEditText();
-        description = ((TextInputLayout) findViewById(R.id.description)).getEditText();
-        amount = ((TextInputLayout) findViewById(R.id.amount)).getEditText();
+        name = findViewById(R.id.name);
+        description = findViewById(R.id.description);
+        amount = findViewById(R.id.amount);
+
+        LinearLayout locationLayout = findViewById(R.id.location_layout);
+        TextView locationHint = findViewById(R.id.location_hint);
+        locationAdapter = new LocationAdapter(locationLayout, locationHint, model);
+        if(getIntent().hasExtra(EXTRA_DATABASE_ID))
+            locationAdapter.setDatabaseId(getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
+
+        tagLayout = findViewById(R.id.tag_layout);
+        tagHint = findViewById(R.id.tags_hint);
+        tags = findViewById(R.id.tags);
 
         Intent intent = getIntent();
         if (intent.hasExtra(ItemViewActivity.EXTRA_ITEM_ID)) {
@@ -67,6 +89,10 @@ public class ItemEditActivity extends AppCompatActivity {
                     name.setText(item.getName());
                     description.setText(item.getDescription());
                     amount.setText(String.valueOf(item.getAmount()));
+
+                    locationAdapter.setDatabaseId(item.getDatabaseId());
+                    locationAdapter.setLocationId(item.getLocationId());
+
                     model.loaded = true;
                 }
             });
@@ -77,6 +103,7 @@ public class ItemEditActivity extends AppCompatActivity {
             name.setText(savedInstanceState.getString(ITEM_NAME));
             description.setText(savedInstanceState.getString(ITEM_DESCRIPTION));
             amount.setText(String.valueOf(savedInstanceState.getInt(ITEM_AMOUNT)));
+            locationAdapter.setLocationId(savedInstanceState.getInt(LOCATION_ID));
         }
     }
 
@@ -102,6 +129,16 @@ public class ItemEditActivity extends AppCompatActivity {
         outState.putString(ITEM_NAME, name.getText().toString());
         outState.putString(ITEM_DESCRIPTION, description.getText().toString());
         outState.putInt(ITEM_AMOUNT, Integer.parseInt(amount.getText().toString()));
+        outState.putInt(LOCATION_ID, locationAdapter.getLocationId());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == LocationListActivity.LOCATION_CHOSE_CODE)
+                locationAdapter.onChooseResult(data);
+        }
     }
 
     void saveItem() {
@@ -125,6 +162,7 @@ public class ItemEditActivity extends AppCompatActivity {
 
         item.setId(itemId);
         item.setDatabaseId(databaseId);
+        item.setLocationId(locationAdapter.getLocationId());
         item.setLastEdited(System.currentTimeMillis());
 
         model.saveItem(item);
@@ -147,5 +185,53 @@ public class ItemEditActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.cancel, null);
 
         builder.create().show();
+    }
+
+    private class LocationAdapter implements View.OnClickListener {
+        LinearLayout locationLayout;
+        TextView locationHint;
+        ItemViewModel model;
+        int databaseId;
+        int locationId;
+
+        private LocationAdapter(LinearLayout locationLayout, TextView locationHint, ItemViewModel model) {
+            this.locationLayout = locationLayout;
+            this.locationHint = locationHint;
+            this.model = model;
+            this.databaseId = databaseId;
+            locationLayout.setOnClickListener(this);
+        }
+
+        public void onChooseResult(Intent data) {
+            setLocationId(data.getIntExtra(LocationListActivity.EXTRA_LOCATION_ID, 0));
+        }
+
+        public void setLocationId(int locationId) {
+            this.locationId = locationId;
+            LiveData<LocationEntity> liveData = model.getLocation(locationId);
+            liveData.observe(ItemEditActivity.this, location -> {
+                if (location == null)
+                    return;
+
+                locationHint.setText(location.getName());
+                liveData.removeObservers(ItemEditActivity.this);
+            });
+        }
+
+        public int getLocationId() {
+            return locationId;
+        }
+
+        public void setDatabaseId(int databaseId) {
+            this.databaseId = databaseId;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), LocationListActivity.class);
+            intent.putExtra(LocationListActivity.EXTRA_DATABASE_ID, databaseId);
+            intent.putExtra(LocationListActivity.EXTRA_CHOOSE_MODE, true);
+            startActivityForResult(intent, LocationListActivity.LOCATION_CHOSE_CODE);
+        }
     }
 }

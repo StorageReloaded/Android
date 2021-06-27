@@ -26,6 +26,8 @@ import io.github.storagereloaded.android.viewmodel.LocationViewModel;
 
 public class LocationListActivity extends AppCompatActivity {
 
+    public static final int LOCATION_CHOSE_CODE = 1651;
+
     public static final String EXTRA_LOCATION_ID = "io.github.storagereloaded.android.location_id";
     public static final String EXTRA_DATABASE_ID = "io.github.storagereloaded.android.database_id";
     public static final String EXTRA_CHOOSE_MODE = "io.github.storagereloaded.android.choose_mode";
@@ -52,6 +54,7 @@ public class LocationListActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_LOCATION_ID, locationId);
                 setResult(RESULT_OK, intent);
+                finish();
             } else {
                 Intent intent = new Intent(getApplicationContext(), LocationEditActivity.class);
                 intent.putExtra(EXTRA_LOCATION_ID, locationId);
