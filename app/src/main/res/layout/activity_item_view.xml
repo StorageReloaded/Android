@@ -36,6 +36,7 @@
                 android:layout_height="270dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
+                android:visibility="gone"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
 
@@ -138,6 +139,8 @@
                         android:id="@+id/created"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textColor="@color/material_on_background_emphasis_medium"
                         tools:text="A long time ago in a galaxy far away" />
@@ -164,6 +167,8 @@
                         android:id="@+id/last_edited"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textColor="@color/material_on_background_emphasis_medium"
                         tools:text="A long time ago in a galaxy far away" />
