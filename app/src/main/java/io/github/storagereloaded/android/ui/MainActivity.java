@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LinearLayout noDatabaseLayout;
 
     FloatingActionButton itemAddButton;
+    Button noDatabaseButton;
 
     TextView navHeaderTitle;
     TextView navHeaderSubtitle;
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         noDatabaseLayout = findViewById(R.id.no_database_layout);
+        noDatabaseButton = findViewById(R.id.no_database_button);
+        noDatabaseButton.setOnClickListener(v -> startActivity(new Intent(this, DatabaseSettingsActivity.class)));
     }
 
     @Override
