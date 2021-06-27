@@ -158,10 +158,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public void deleteDatabase(int databaseId) {
         appExecutors.diskIO().execute(() -> {
+            // Tag relations need to be deleted before items, otherwise there is no information
+            // about what database the relation was in
+            tagRelationDao().deleteTagRelationsInDatabase(databaseId);
             databaseDao().deleteDatabase(databaseId);
             itemDao().deleteItemsInDatabase(databaseId);
             locationDao().deleteLocationsInDatabase(databaseId);
-            tagRelationDao().deleteTagRelationsInDatabase(databaseId);
         });
     }
 }
