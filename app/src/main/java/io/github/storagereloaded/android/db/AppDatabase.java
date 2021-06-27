@@ -35,6 +35,8 @@ import io.github.storagereloaded.android.db.entity.TagRelationEntity;
 @TypeConverters(ObjectConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
+    private static final boolean ADD_TEST_DATA = false;
+
     private static AppDatabase instance;
 
     @VisibleForTesting
@@ -79,25 +81,27 @@ public abstract class AppDatabase extends RoomDatabase {
                     // Generate the data for pre-population
                     AppDatabase database = AppDatabase.getInstance(appContext, executors);
 
-                    // For testing
-                    List<DatabaseEntity> databases = DataGenerator.generateDatabases();
-                    List<LocationEntity> locations = DataGenerator.generateLocations();
-                    List<ItemEntity> items = DataGenerator.generateItems(databases, locations);
-                    List<InternalPropertyEntity> internalProperties = DataGenerator.generateInternalProperties(items);
-                    List<CustomPropertyEntity> customProperties = DataGenerator.generateCustomProperties(items);
-                    List<TagEntity> tags = DataGenerator.generateTags();
-                    List<TagRelationEntity> tagRelations = DataGenerator.generateTagRelations(tags, items);
+                    if(ADD_TEST_DATA) {
+                        // For testing
+                        List<DatabaseEntity> databases = DataGenerator.generateDatabases();
+                        List<LocationEntity> locations = DataGenerator.generateLocations();
+                        List<ItemEntity> items = DataGenerator.generateItems(databases, locations);
+                        List<InternalPropertyEntity> internalProperties = DataGenerator.generateInternalProperties(items);
+                        List<CustomPropertyEntity> customProperties = DataGenerator.generateCustomProperties(items);
+                        List<TagEntity> tags = DataGenerator.generateTags();
+                        List<TagRelationEntity> tagRelations = DataGenerator.generateTagRelations(tags, items);
 
-                    // Insert data
-                    database.runInTransaction(() -> {
-                        database.databaseDao().insertAll(databases);
-                        database.locationDao().insertAll(locations);
-                        database.itemDao().insertAll(items);
-                        database.internalPropertyDoa().insertAll(internalProperties);
-                        database.customPropertyDoa().insertAll(customProperties);
-                        database.tagDao().insertAll(tags);
-                        database.tagRelationDao().insertAll(tagRelations);
-                    });
+                        // Insert data
+                        database.runInTransaction(() -> {
+                            database.databaseDao().insertAll(databases);
+                            database.locationDao().insertAll(locations);
+                            database.itemDao().insertAll(items);
+                            database.internalPropertyDoa().insertAll(internalProperties);
+                            database.customPropertyDoa().insertAll(customProperties);
+                            database.tagDao().insertAll(tags);
+                            database.tagRelationDao().insertAll(tagRelations);
+                        });
+                    }
 
                     // notify that the database was created and it's ready to be used
                     database.setDatabaseCreated();
