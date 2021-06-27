@@ -3,8 +3,6 @@ package io.github.storagereloaded.android.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
@@ -14,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Random;
 
 import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.viewmodel.LoginViewModel;
@@ -111,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
         displayStatus(status);
 
         if (status == STATUS_OK) {
+            model.setSessionId(sessionId);
+
             SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(getString(R.string.preferences_server_address), serverAddress);

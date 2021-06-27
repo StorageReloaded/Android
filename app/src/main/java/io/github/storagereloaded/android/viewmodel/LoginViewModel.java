@@ -24,6 +24,10 @@ public class LoginViewModel extends AndroidViewModel {
         stoRe = ((StoReApp) application).getStoRe();
     }
 
+    public void setSessionId(String sessionId) {
+        stoRe.setSessionId(sessionId);
+    }
+
     public LiveData<Boolean> checkServer(String serverAddress) {
         MutableLiveData<Boolean> data = new MutableLiveData<Boolean>() {
         };
