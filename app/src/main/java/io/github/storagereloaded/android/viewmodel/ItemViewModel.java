@@ -21,8 +21,7 @@ public class ItemViewModel extends AndroidViewModel {
     private final DataRepository repository;
     private int itemId = 0;
     public boolean loaded = false;
-    public boolean locationLoaded;
-    public boolean tagsLoaded;
+    public boolean tagsLoaded = false;
 
     public ItemViewModel(@NonNull Application application) {
         super(application);
@@ -41,8 +40,16 @@ public class ItemViewModel extends AndroidViewModel {
         return repository.getLocation(locationId);
     }
 
-    public LiveData<List<TagEntity>> getTags() {
+    public LiveData<List<TagEntity>> getTagsInItem() {
         return repository.getTagsInItem(itemId);
+    }
+
+    public LiveData<List<TagEntity>> getTags() {
+        return repository.getTags();
+    }
+
+    public LiveData<TagEntity> getTag(int tagId) {
+        return repository.getTag(tagId);
     }
 
     public LiveData<List<CustomPropertyEntity>> getCustomProperties() {
@@ -51,6 +58,10 @@ public class ItemViewModel extends AndroidViewModel {
 
     public LiveData<List<InternalPropertyEntity>> getInternalProperties() {
         return repository.getInternalPropertiesInItem(itemId);
+    }
+
+    public void setTags(List<Integer> tagIds) {
+        repository.setTagsForItem(itemId, tagIds);
     }
 
     public void saveItem(ItemEntity item) {

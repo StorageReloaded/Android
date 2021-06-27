@@ -101,7 +101,7 @@ public class ItemViewActivity extends AppCompatActivity {
             model.getLocation(item.getLocationId()).observe(ItemViewActivity.this, adapter::setLocation);
         });
 
-        model.getTags().observe(this, tags -> {
+        model.getTagsInItem().observe(this, tags -> {
             if (tags == null || tags.isEmpty()) {
                 HorizontalScrollView chipsScroll = findViewById(R.id.chips_scroll_layout);
                 View divider = findViewById(R.id.chips_divider);

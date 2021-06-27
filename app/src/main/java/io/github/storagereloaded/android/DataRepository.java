@@ -104,6 +104,10 @@ public class DataRepository {
         appDatabase.saveLocation(location);
     }
 
+    public void setTagsForItem(int itemId, List<Integer> tagIds) {
+        appDatabase.setTagsForItem(itemId, tagIds);
+    }
+
     public void deleteItem(int itemId) {
         appDatabase.deleteItem(itemId);
     }

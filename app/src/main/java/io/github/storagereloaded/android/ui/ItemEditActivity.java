@@ -2,6 +2,7 @@ package io.github.storagereloaded.android.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -14,12 +15,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
+import io.github.storagereloaded.android.db.entity.TagEntity;
 import io.github.storagereloaded.android.viewmodel.ItemViewModel;
 
 public class ItemEditActivity extends AppCompatActivity {
@@ -28,6 +34,7 @@ public class ItemEditActivity extends AppCompatActivity {
     private static final String ITEM_DESCRIPTION = "item_description";
     private static final String ITEM_AMOUNT = "item_amount";
     private static final String LOCATION_ID = "location_id";
+    private static final String TAG_IDS = "tag_ids";
     public static final String EXTRA_DATABASE_ID = "io.github.storagereloaded.android.database_id";
 
     int itemId = 0;
@@ -40,10 +47,7 @@ public class ItemEditActivity extends AppCompatActivity {
     EditText amount;
 
     LocationAdapter locationAdapter;
-
-    LinearLayout tagLayout;
-    TextView tagHint;
-    ChipGroup tags;
+    TagsAdapter tagsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +67,13 @@ public class ItemEditActivity extends AppCompatActivity {
         LinearLayout locationLayout = findViewById(R.id.location_layout);
         TextView locationHint = findViewById(R.id.location_hint);
         locationAdapter = new LocationAdapter(locationLayout, locationHint, model);
-        if(getIntent().hasExtra(EXTRA_DATABASE_ID))
+        if (getIntent().hasExtra(EXTRA_DATABASE_ID))
             locationAdapter.setDatabaseId(getIntent().getIntExtra(EXTRA_DATABASE_ID, 0));
 
-        tagLayout = findViewById(R.id.tag_layout);
-        tagHint = findViewById(R.id.tags_hint);
-        tags = findViewById(R.id.tags);
+        LinearLayout tagLayout = findViewById(R.id.tag_layout);
+        TextView tagHint = findViewById(R.id.tags_hint);
+        ChipGroup tags = findViewById(R.id.tags);
+        tagsAdapter = new TagsAdapter(tagLayout, tagHint, tags, model);
 
         Intent intent = getIntent();
         if (intent.hasExtra(ItemViewActivity.EXTRA_ITEM_ID)) {
@@ -96,6 +101,17 @@ public class ItemEditActivity extends AppCompatActivity {
                     model.loaded = true;
                 }
             });
+
+            model.getTagsInItem().observe(this, tagEntities -> {
+                if(tagEntities == null)
+                    return;
+
+                if(!model.tagsLoaded) {
+                    Log.d("Test123", "setTags");
+                    tagsAdapter.setTags(tagEntities);
+                    model.tagsLoaded = true;
+                }
+            });
         }
 
         // Restore ui after configuration change, so the user doesn't lose his edits
@@ -104,6 +120,7 @@ public class ItemEditActivity extends AppCompatActivity {
             description.setText(savedInstanceState.getString(ITEM_DESCRIPTION));
             amount.setText(String.valueOf(savedInstanceState.getInt(ITEM_AMOUNT)));
             locationAdapter.setLocationId(savedInstanceState.getInt(LOCATION_ID));
+            tagsAdapter.setTagIds(savedInstanceState.getIntegerArrayList(TAG_IDS));
         }
     }
 
@@ -130,14 +147,17 @@ public class ItemEditActivity extends AppCompatActivity {
         outState.putString(ITEM_DESCRIPTION, description.getText().toString());
         outState.putInt(ITEM_AMOUNT, Integer.parseInt(amount.getText().toString()));
         outState.putInt(LOCATION_ID, locationAdapter.getLocationId());
+        outState.putIntegerArrayList(TAG_IDS, tagsAdapter.getTagIs());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == LocationListActivity.LOCATION_CHOSE_CODE)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LocationListActivity.LOCATION_CHOSE_CODE)
                 locationAdapter.onChooseResult(data);
+            else if(requestCode == TagListActivity.TAG_CHOSE_CODE)
+                tagsAdapter.onChooseResult(data);
         }
     }
 
@@ -166,6 +186,7 @@ public class ItemEditActivity extends AppCompatActivity {
         item.setLastEdited(System.currentTimeMillis());
 
         model.saveItem(item);
+        model.setTags(tagsAdapter.getTagIs());
     }
 
     ItemEntity getItemValuesFromUI() {
@@ -232,6 +253,97 @@ public class ItemEditActivity extends AppCompatActivity {
             intent.putExtra(LocationListActivity.EXTRA_DATABASE_ID, databaseId);
             intent.putExtra(LocationListActivity.EXTRA_CHOOSE_MODE, true);
             startActivityForResult(intent, LocationListActivity.LOCATION_CHOSE_CODE);
+        }
+    }
+
+    private class TagsAdapter implements View.OnClickListener {
+
+        LinearLayout tagLayout;
+        TextView tagHint;
+        ChipGroup tags;
+
+        ArrayList<Integer> tagIds;
+
+        private TagsAdapter(LinearLayout tagLayout, TextView tagHint, ChipGroup tags, ItemViewModel model) {
+            this.tagLayout = tagLayout;
+            this.tagHint = tagHint;
+            this.tags = tags;
+            tagIds = new ArrayList<>();
+
+            tagLayout.setOnClickListener(this);
+        }
+
+        public void onChooseResult(Intent data) {
+            addTagId(data.getIntExtra(TagListActivity.EXTRA_TAG_ID, 0));
+        }
+
+        public void setTags(List<TagEntity> tags) {
+            if(tags.isEmpty())
+                return;
+
+            tagHint.setVisibility(View.GONE);
+
+            for(TagEntity tag : tags){
+                if(!tagIds.contains(tag.getId()))
+                    addTag(tag);
+            }
+        }
+
+        public void setTagIds(List<Integer> tagIds) {
+            LiveData<List<TagEntity>> liveData = model.getTagsInItem();
+            liveData.observe(ItemEditActivity.this, tags -> {
+                if (tags == null)
+                    return;
+
+                for(TagEntity tag : tags){
+                    if(tagIds.contains(tag.getId()))
+                        addTag(tag);
+                }
+                liveData.removeObservers(ItemEditActivity.this);
+            });
+        }
+
+        public ArrayList<Integer> getTagIs() {
+            return tagIds;
+        }
+
+        private void addTagId(int tagId) {
+            tagHint.setVisibility(View.GONE);
+
+            if(tagIds.contains(tagId))
+                return;
+
+            LiveData<TagEntity> liveData = model.getTag(tagId);
+            liveData.observe(ItemEditActivity.this, tag -> {
+                if (tag == null)
+                    return;
+
+                addTag(tag);
+                liveData.removeObservers(ItemEditActivity.this);
+            });
+        }
+
+        private void addTag(TagEntity tag) {
+            tagIds.add(tag.getId());
+
+            int index = tags.getChildCount();
+            Chip chip = new Chip(tags.getContext());
+            chip.setText(tag.getName());
+            chip.setCloseIconVisible(true);
+            chip.setOnCloseIconClickListener(v -> {
+                tags.removeViewAt(index);
+                tagIds.remove(index);
+                if(tagIds.isEmpty())
+                    tagHint.setVisibility(View.VISIBLE);
+            });
+            tags.addView(chip);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), TagListActivity.class);
+            intent.putExtra(TagListActivity.EXTRA_CHOOSE_MODE, true);
+            startActivityForResult(intent, TagListActivity.TAG_CHOSE_CODE);
         }
     }
 }

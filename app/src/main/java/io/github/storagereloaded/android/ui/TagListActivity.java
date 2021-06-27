@@ -13,6 +13,7 @@ import io.github.storagereloaded.android.viewmodel.TagViewModel;
 
 public class TagListActivity extends ListActivityBase<TagEntity> {
 
+    public static final int TAG_CHOSE_CODE = 6516;
     public static final String EXTRA_TAG_ID = "io.github.storagereloaded.android.tag_id";
     public static final String EXTRA_CHOOSE_MODE = "io.github.storagereloaded.android.choose_mode";
 
@@ -39,6 +40,7 @@ public class TagListActivity extends ListActivityBase<TagEntity> {
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_TAG_ID, id);
                 setResult(RESULT_OK, intent);
+                finish();
             } else {
                 Intent intent = new Intent(getApplicationContext(), TagEditActivity.class);
                 intent.putExtra(EXTRA_TAG_ID, id);

@@ -12,6 +12,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.storagereloaded.android.AppExecutors;
@@ -30,6 +31,7 @@ import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
 import io.github.storagereloaded.android.db.entity.TagRelationEntity;
+import io.github.storagereloaded.api.Tag;
 
 @Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class, LocationEntity.class, TagEntity.class, TagRelationEntity.class}, version = 1)
 @TypeConverters(ObjectConverter.class)
@@ -135,6 +137,21 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public void saveTag(TagEntity tag) {
         appExecutors.diskIO().execute(() -> tagDao().insert(tag));
+    }
+
+    public void setTagsForItem(int itemId, List<Integer> tagIds) {
+        appExecutors.diskIO().execute(() -> {
+            tagRelationDao().deleteTagRelationsWithItem(itemId);
+            List<TagRelationEntity> relationEntities = new ArrayList<>();
+            for(Integer tagId : tagIds){
+                TagRelationEntity relationEntity = new TagRelationEntity();
+                relationEntity.setId(0);
+                relationEntity.setItemId(itemId);
+                relationEntity.setTagId(tagId);
+                relationEntities.add(relationEntity);
+            }
+            tagRelationDao().insertAll(relationEntities);
+        });
     }
 
     public void deleteItem(int itemId) {
