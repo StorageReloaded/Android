@@ -102,12 +102,15 @@ public class ItemViewActivity extends AppCompatActivity {
         });
 
         model.getTagsInItem().observe(this, tags -> {
+            HorizontalScrollView chipsScroll = findViewById(R.id.chips_scroll_layout);
+            View divider = findViewById(R.id.chips_divider);
+
             if (tags == null || tags.isEmpty()) {
-                HorizontalScrollView chipsScroll = findViewById(R.id.chips_scroll_layout);
-                View divider = findViewById(R.id.chips_divider);
                 chipsScroll.setVisibility(View.GONE);
                 divider.setVisibility(View.GONE);
             } else {
+                chipsScroll.setVisibility(View.VISIBLE);
+                divider.setVisibility(View.VISIBLE);
                 chips.removeAllViews();
                 for (TagEntity tag : tags) {
                     Chip chip = new Chip(this);
