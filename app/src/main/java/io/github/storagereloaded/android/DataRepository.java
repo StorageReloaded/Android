@@ -112,6 +112,14 @@ public class DataRepository {
         appDatabase.deleteLocation(locationId);
     }
 
+    public void deleteTag(int tagId) {
+        appDatabase.deleteTag(tagId);
+    }
+
+    public void deleteDatabase(int databaseId) {
+        appDatabase.deleteDatabase(databaseId);
+    }
+
     public LiveData<Boolean> checkConnection() {
         LiveData<Boolean> data = new LiveData<Boolean>() {
         };
@@ -123,4 +131,6 @@ public class DataRepository {
     public boolean isUserLoggedIn() {
         return stoRe.hasLogin();
     }
+
+
 }

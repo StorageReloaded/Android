@@ -1,13 +1,13 @@
 package io.github.storagereloaded.android.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -73,6 +73,10 @@ public class TagEditActivity extends AppCompatActivity {
             saveDatabase();
             finish();
             return true;
+        } else if (item.getItemId() == R.id.delete) {
+            model.deleteTag(tag.getId());
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -95,7 +99,7 @@ public class TagEditActivity extends AppCompatActivity {
     }
 
     private void saveDatabase() {
-        if(tag == null) {
+        if (tag == null) {
             tag = new TagEntity();
             tag.setId(0);
         }

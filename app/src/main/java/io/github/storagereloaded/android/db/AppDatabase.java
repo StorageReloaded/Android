@@ -1,18 +1,16 @@
 package io.github.storagereloaded.android.db;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-
 import android.content.Context;
-import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.List;
 
@@ -32,7 +30,6 @@ import io.github.storagereloaded.android.db.entity.ItemEntity;
 import io.github.storagereloaded.android.db.entity.LocationEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
 import io.github.storagereloaded.android.db.entity.TagRelationEntity;
-import io.github.storagereloaded.android.model.Tag;
 
 @Database(entities = {DatabaseEntity.class, ItemEntity.class, InternalPropertyEntity.class, CustomPropertyEntity.class, LocationEntity.class, TagEntity.class, TagRelationEntity.class}, version = 1)
 @TypeConverters(ObjectConverter.class)
@@ -146,5 +143,21 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public void deleteLocation(int locationId) {
         appExecutors.diskIO().execute(() -> locationDao().deleteLocation(locationId));
+    }
+
+    public void deleteTag(int tagId) {
+        appExecutors.diskIO().execute(() -> {
+            tagDao().deleteTag(tagId);
+            tagRelationDao().deleteTagRelationsWithTag(tagId);
+        });
+    }
+
+    public void deleteDatabase(int databaseId) {
+        appExecutors.diskIO().execute(() -> {
+            databaseDao().deleteDatabase(databaseId);
+            itemDao().deleteItemsInDatabase(databaseId);
+            locationDao().deleteLocationsInDatabase(databaseId);
+            tagRelationDao().deleteTagRelationsInDatabase(databaseId);
+        });
     }
 }

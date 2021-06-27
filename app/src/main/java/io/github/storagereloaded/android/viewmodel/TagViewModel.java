@@ -33,4 +33,8 @@ public class TagViewModel extends AndroidViewModel {
     public void saveTag(TagEntity tag) {
         repository.saveTag(tag);
     }
+
+    public void deleteTag(int tagId) {
+        repository.deleteTag(tagId);
+    }
 }

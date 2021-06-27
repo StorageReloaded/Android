@@ -74,4 +74,8 @@ public class DatabaseViewModel extends AndroidViewModel {
     public boolean isUserLoggedIn() {
         return repository.isUserLoggedIn();
     }
+
+    public void deleteDatabase(int databaseId) {
+        repository.deleteDatabase(databaseId);
+    }
 }

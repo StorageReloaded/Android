@@ -27,4 +27,7 @@ public interface TagDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(TagEntity tag);
+
+    @Query("DELETE FROM tags WHERE id=:tagId")
+    void deleteTag(int tagId);
 }

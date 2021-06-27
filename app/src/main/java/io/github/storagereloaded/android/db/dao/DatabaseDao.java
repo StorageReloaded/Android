@@ -23,4 +23,7 @@ public interface DatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DatabaseEntity database);
+
+    @Query("DELETE FROM databases WHERE id=:databaseId")
+    void deleteDatabase(int databaseId);
 }

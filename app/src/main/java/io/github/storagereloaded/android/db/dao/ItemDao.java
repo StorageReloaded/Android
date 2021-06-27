@@ -30,4 +30,7 @@ public interface ItemDao {
 
     @Query("DELETE FROM items WHERE id=:itemId")
     void deleteItem(int itemId);
+
+    @Query("DELETE FROM items WHERE databaseId=:databaseId")
+    void deleteItemsInDatabase(int databaseId);
 }

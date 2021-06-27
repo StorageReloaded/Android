@@ -21,4 +21,7 @@ public interface InternalPropertyDoa {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<InternalPropertyEntity> internalProperties);
+
+    @Query("DELETE FROM internal_properties WHERE id=:id")
+    void deleteInternalProperty(int id);
 }

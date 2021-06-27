@@ -29,4 +29,7 @@ public interface LocationDao {
 
     @Query("DELETE FROM locations WHERE id=:locationId")
     void deleteLocation(int locationId);
+
+    @Query("DELETE FROM locations WHERE databaseId=:databaseId")
+    void deleteLocationsInDatabase(int databaseId);
 }

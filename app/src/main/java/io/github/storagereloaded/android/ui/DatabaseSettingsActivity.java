@@ -74,6 +74,10 @@ public class DatabaseSettingsActivity extends AppCompatActivity {
             saveDatabase();
             finish();
             return true;
+        } else if(item.getItemId() == R.id.delete) {
+            model.deleteDatabase(database.getId());
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
