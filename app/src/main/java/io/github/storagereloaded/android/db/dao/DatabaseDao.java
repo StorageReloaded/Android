@@ -12,7 +12,7 @@ import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 
 @Dao
 public interface DatabaseDao {
-    @Query("SELECT * FROM databases")
+    @Query("SELECT * FROM databases ORDER BY name")
     LiveData<List<DatabaseEntity>> getDatabases();
 
     @Query("SELECT * FROM databases WHERE id=:databaseId")

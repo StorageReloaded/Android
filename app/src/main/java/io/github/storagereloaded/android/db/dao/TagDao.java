@@ -8,12 +8,11 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import io.github.storagereloaded.android.db.entity.DatabaseEntity;
 import io.github.storagereloaded.android.db.entity.TagEntity;
 
 @Dao
 public interface TagDao {
-    @Query("SELECT DISTINCT tags.id, tags.name FROM tags, tag_relations WHERE tags.id=tag_relations.tagId AND tag_relations.itemId=:itemId")
+    @Query("SELECT DISTINCT tags.id, tags.name FROM tags, tag_relations WHERE (tags.id=tag_relations.tagId AND tag_relations.itemId=:itemId) ORDER BY tags.name")
     LiveData<List<TagEntity>> getTagsInItem(int itemId);
 
     @Query("SELECT * FROM tags ORDER BY name")
