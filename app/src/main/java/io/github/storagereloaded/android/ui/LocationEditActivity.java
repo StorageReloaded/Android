@@ -29,6 +29,7 @@ public class LocationEditActivity extends AppCompatActivity {
 
     EditText name;
     AutoCompleteTextView databaseSelect;
+    TextInputLayout databaseInputLayout;
     int databaseSelectionIndex = 0;
 
     LocationViewModel model;
@@ -48,13 +49,14 @@ public class LocationEditActivity extends AppCompatActivity {
 
         name = ((TextInputLayout) findViewById(R.id.location_name)).getEditText();
 
-        databaseSelect = (AutoCompleteTextView) ((TextInputLayout) findViewById(R.id.database_select)).getEditText();
+        databaseInputLayout = findViewById(R.id.database_select);
+        databaseSelect = (AutoCompleteTextView) databaseInputLayout.getEditText();
         ArrayAdapter<DatabaseEntity> adapter = new ArrayAdapter<>(this, R.layout.list_item_database_select);
         databaseSelect.setAdapter(adapter);
         databaseSelect.setOnItemClickListener((parent, view, position, id) -> databaseSelectionIndex = position);
 
         if (getIntent().hasExtra(LocationListActivity.EXTRA_DATABASE_ID))
-            databaseSelect.setVisibility(View.GONE);
+            databaseInputLayout.setVisibility(View.GONE);
 
         model.getDatabases().observe(this, databases -> {
             if (databases == null)
