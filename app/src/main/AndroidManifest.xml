@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StoRe">
-        <activity android:name=".ui.ListActivityBase"></activity>
+        <activity android:name=".ui.ListActivityBase" />
         <activity android:name=".ui.LocationEditActivity" />
         <activity android:name=".ui.LocationListActivity" />
         <activity android:name=".ui.TagEditActivity" />

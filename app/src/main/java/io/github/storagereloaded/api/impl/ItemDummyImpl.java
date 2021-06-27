@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import io.github.storagereloaded.api.Item;
-import io.github.storagereloaded.api.Property;
 import io.github.storagereloaded.api.Location;
+import io.github.storagereloaded.api.Property;
 import io.github.storagereloaded.api.Tag;
 
 public class ItemDummyImpl implements Item {
@@ -18,12 +18,12 @@ public class ItemDummyImpl implements Item {
 	private String description = "TestItem please ignore";
 	private String image = "http://IP/PATH/img.png";
 	private Location location = new LocationDummyImpl();
-	private List<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags = new ArrayList<>();
 	private int amount = 25;
 
-	private List<Property> propertiesInternal = new ArrayList<Property>();
-	private List<Property> propertiesCustom = new ArrayList<Property>();
-	private Map<String, String> attachments = new HashMap<String, String>();
+	private List<Property> propertiesInternal = new ArrayList<>();
+	private List<Property> propertiesCustom = new ArrayList<>();
+	private Map<String, String> attachments = new HashMap<>();
 
 	private Date lastEdited = new Date(3165416541646341L);
 	private Date created = new Date(3165416541646341L);

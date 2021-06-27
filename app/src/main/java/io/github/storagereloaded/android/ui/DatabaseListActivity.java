@@ -1,12 +1,12 @@
 package io.github.storagereloaded.android.ui;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
 
 import io.github.storagereloaded.android.R;
 import io.github.storagereloaded.android.db.entity.DatabaseEntity;

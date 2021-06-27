@@ -1,8 +1,6 @@
 package io.github.storagereloaded.android.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(DatabaseViewModel.class);
-        if(!viewModel.isUserLoggedIn())
+        if (!viewModel.isUserLoggedIn())
             startActivity(new Intent(this, LoginActivity.class));
 
         toolbar = findViewById(R.id.toolbar);
@@ -139,8 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewModel.getItems().observe(this, this::displayItems);
             }
         });
-
-        //viewModel.checkConnection();
     }
 
     private void displayDatabase(DatabaseEntity databaseEntity) {
@@ -184,30 +180,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_database_new:
-                startActivity(new Intent(this, DatabaseSettingsActivity.class));
-                break;
-            case R.id.nav_database_select:
-                startActivityForResult(new Intent(this, DatabaseListActivity.class), DatabaseListActivity.REQUEST_CODE);
-                break;
-            case R.id.nav_database_tags:
-                startActivity(new Intent(this, TagListActivity.class));
-                break;
-            case R.id.nav_database_locations:
-                startActivity(new Intent(this, LocationListActivity.class));
-                break;
-            case R.id.nav_app_settings:
-                startActivity(new Intent(this, AppSettingsActivity.class));
-                break;
-            case R.id.nav_logout:
-                // For testing
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case R.id.nav_account:
-                // For testing
-                startActivity(new Intent(this, ListActivityBase.class));
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_database_new) {
+            startActivity(new Intent(this, DatabaseSettingsActivity.class));
+        } else if (itemId == R.id.nav_database_select) {
+            startActivityForResult(new Intent(this, DatabaseListActivity.class), DatabaseListActivity.REQUEST_CODE);
+        } else if (itemId == R.id.nav_database_tags) {
+            startActivity(new Intent(this, TagListActivity.class));
+        } else if (itemId == R.id.nav_database_locations) {
+            startActivity(new Intent(this, LocationListActivity.class));
+        } else if (itemId == R.id.nav_app_settings) {
+            startActivity(new Intent(this, AppSettingsActivity.class));
+        } else if (itemId == R.id.nav_logout) {
+            // For testing
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         drawer.closeDrawers();

@@ -1,12 +1,5 @@
 package io.github.storagereloaded.android.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +9,13 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.Chip;
@@ -98,9 +98,7 @@ public class ItemViewActivity extends AppCompatActivity {
             created.setText(format.format(item.getCreated()));
             lastEdited.setText(format.format(item.getLastEdited()));
 
-            model.getLocation(item.getLocationId()).observe(ItemViewActivity.this, locationEntity -> {
-                adapter.setLocation(locationEntity);
-            });
+            model.getLocation(item.getLocationId()).observe(ItemViewActivity.this, adapter::setLocation);
         });
 
         model.getTags().observe(this, tags -> {
